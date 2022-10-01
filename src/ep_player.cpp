@@ -55,12 +55,36 @@ void Player::update_interactions() {
     if(!interaction_raycast) return;
 
     if(velocity != Vector2::ZERO) interaction_raycast->set_cast_to(velocity.normalized() * interaction_distance);
-    if(interaction_raycast->is_colliding() && Object::cast_to<Interactable>(interaction_raycast->get_collider()))
-        current_interactable = Object::cast_to<Interactable>(interaction_raycast->get_collider());
-    else current_interactable = nullptr;
+    if(!(current_interactable = Object::cast_to<Interactable>(interaction_raycast->get_collider())))
+        current_interactable = nullptr;
 }
 
 void Player::interact() {
-    if(!current_interactable) return;
-    current_interactable->interact();
+    if(!current_interactable || !current_interactable->can_interact(this)) return;
+    current_interactable->interact(this);
+}
+
+bool Player::add_item_to_inventory(String item) {
+    if(inventory.has(item)) return false;
+    inventory.append(item);
+    return true;
+}
+
+void Player::add_items_to_inventory(Array items) {
+    for(int i = 0; i < items.size(); i++) {
+        add_item_to_inventory(items[i]);
+    }
+}
+
+void Player::remove_items_from_inventory(Array items) {
+    for(int i = 0; i < items.size(); i++) {
+        if(inventory.has(items[i])) inventory.remove(i);
+    }
+}
+
+bool Player::inventory_has_items(Array items) {
+    for(int i = 0; i < items.size(); i++) {
+        if(!inventory.has(items[i])) return false;
+    }
+    return true;
 }

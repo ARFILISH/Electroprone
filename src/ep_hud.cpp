@@ -12,7 +12,7 @@ void HUD::_ready() {
     electric_progress_bar = get_node<TextureProgress>("ElectricProgressBar");
     electric_text = get_node<Label>("ElectricProgressBar/ElectricLabel");
 
-    if(!electric_timer || electric_timer->get_time_left() < 0.f) electric_progress_bar->set_visible(false);
+    if(!electric_timer || electric_timer->get_time_left() <= 0.f) electric_progress_bar->set_visible(false);
     if(!electric_timer) return;
     electric_timer->connect("started", this, "timer_started");
     electric_timer->connect("stopped", this, "timer_stopped");

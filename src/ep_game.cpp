@@ -6,6 +6,7 @@
 #include "ep_sequence.hpp"
 #include "ep_hud.hpp"
 #include "ep_electric_timer.hpp"
+#include "ep_pickupable.hpp"
 
 using namespace godot;
 
@@ -26,4 +27,5 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
     register_class<Sequence>();
     register_class<HUD>();
     register_class<ElectricTimer>();
+    register_class<Pickupable>();
 }

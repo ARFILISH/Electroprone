@@ -10,13 +10,16 @@ class AudioStreamPlayer2D;
 
 class Interactable : public Area2D {
     GODOT_CLASS(Interactable, Area2D)
+public:
+    Array needed_items {};
+    bool consume_items = true;
 protected:
     int max_interacts = 0;
     String prompt = "Press Enter to interact";
+    String failed_prompt = "";
 
     AudioStreamPlayer2D* sound_player;
 
-private:
     int interaction_count = 0;
 
 public:
@@ -25,8 +28,11 @@ public:
         register_method("interact", &Interactable::interact);
         register_method("_ready", &Interactable::_ready);
         register_method("get_prompt", &Interactable::get_prompt);
+        register_property<Interactable, Array>("needed_items", &Interactable::needed_items, {});
+        register_property<Interactable, bool>("consume_items", &Interactable::consume_items, true);
         register_property<Interactable, int>("max_interacts", &Interactable::max_interacts, 0);
-        register_property<Interactable, String>("prompt", &Interactable::prompt, String("Press Enter to interact"));
+        register_property<Interactable, String>("prompt", &Interactable::prompt, "Press Enter to interact");
+        register_property<Interactable, String>("failed_prompt", &Interactable::failed_prompt, "");
         register_signal<Interactable>("interacted", GODOT_VARIANT_TYPE_INT, "_count_interacted");
         register_signal<Interactable>("interacted_no_args");
     }
@@ -35,12 +41,14 @@ public:
     ~Interactable() {}
 
     void _init();
-    void interact();
+    void interact(Node* interacted);
     void reset_interaction_count();
-    String get_prompt() const { return prompt; }
+    bool can_interact(Node* interacted) const;
+    String get_prompt(Node* interacted) const { return can_interact(interacted) ? prompt : failed_prompt; }
 
 protected:
     void _ready();
+    void on_interacted(Node* interacted) {}
 };
 
 }

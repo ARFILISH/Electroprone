@@ -72,6 +72,7 @@ script = ExtResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
+one_shot = true
 script = ExtResource( 6 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -83,3 +84,4 @@ timer_path = NodePath("../../Timer")
 
 [connection signal="interacted_no_args" from="Area2D" to="Timer" method="start" binds= [ 10.0 ]]
 [connection signal="sequence_3" from="Node" to="Area2D" method="queue_free"]
+[connection signal="timeout" from="Timer" to="Timer" method="start" binds= [ 10 ]]

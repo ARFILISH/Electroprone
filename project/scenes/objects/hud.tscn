@@ -13,13 +13,11 @@ script = ExtResource( 3 )
 
 [node name="ElectricProgressBar" type="TextureProgress" parent="."]
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
 margin_left = -197.5
-margin_top = -44.0
+margin_top = 15.0
 margin_right = 197.5
-margin_bottom = -12.0
+margin_bottom = 47.0
 max_value = 10.0
 step = 0.01
 texture_under = ExtResource( 2 )
@@ -32,11 +30,13 @@ stretch_margin_bottom = 8
 
 [node name="ElectricLabel" type="Label" parent="ElectricProgressBar"]
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
+anchor_bottom = 1.0
 margin_left = -197.5
-margin_top = -20.0
+margin_top = 4.0
 margin_right = 197.5
-margin_bottom = -6.0
+margin_bottom = 18.0
 text = "10 seconds remaining"
 align = 1
 valign = 1
