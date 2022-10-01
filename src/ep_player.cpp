@@ -42,7 +42,7 @@ void Player::_process(float delta) {
 
 void Player::_physics_process(float delta) {
     if(!input_enabled) return;
-    
+
     Input* input = Input::get_singleton();
 
     is_running = input->is_action_pressed("run");

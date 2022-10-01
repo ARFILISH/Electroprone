@@ -3,6 +3,7 @@
 
 #include <Godot.hpp>
 #include <Control.hpp>
+#include <InputEvent.hpp>
 
 namespace godot {
 
@@ -13,18 +14,20 @@ class Timer;
 class ElectricPanel : public Control {
     GODOT_CLASS(ElectricPanel, Control)
 private:
+    bool input_enabled = true;
     Gate* main_gate;
     Tween* tween;
     Timer* close_timer;
 
 public:
+
     static void _register_methods() {
         register_method("_ready", &ElectricPanel::_ready);
-        register_method("_tree_exit", &ElectricPanel::_tree_exit);
+        register_method("_tree_exit", &ElectricPanel::_exit_tree);
         register_method("show", &ElectricPanel::show);
         register_method("hide", &ElectricPanel::hide);
+        register_method("_input", &ElectricPanel::_input);
         register_method("complete", &ElectricPanel::complete);
-
         register_signal<ElectricPanel>("solved");
         register_signal<ElectricPanel>("showed");
         register_signal<ElectricPanel>("hidden");
@@ -40,7 +43,8 @@ public:
 
 protected:
     void _ready();
-    void _tree_exit();
+    void _input(const Ref<InputEvent> event);
+    void _exit_tree();
     void complete();
 
 };

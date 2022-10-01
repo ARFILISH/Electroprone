@@ -25,7 +25,6 @@ public:
     float walk_speed = 200.f;
     float run_speed = 450.f;
     float interaction_distance = 50.f;
-    bool input_enabled = true;
 
 protected:
     bool is_running = false;
@@ -38,6 +37,7 @@ private:
     // YOU, who looks at source code of this game - use only strings in this array!
     Array inventory {};
     Vector2 velocity = Vector2::ZERO;
+    bool input_enabled = true;
 
 public:
     static void _register_methods() {
@@ -46,6 +46,8 @@ public:
         register_method("_physics_process", &Player::_physics_process);
         register_method("update_interactions", &Player::update_interactions);
         register_method("interact", &Player::interact);
+        register_method("enable_input", &Player::enable_input);
+        register_method("disable_input", &Player::disable_input);
         register_method("add_item_to_inventory", &Player::add_item_to_inventory);
         register_method("add_items_to_inventory", &Player::add_items_to_inventory);
         register_method("remove_items_from_inventory", &Player::remove_items_from_inventory);
@@ -66,11 +68,13 @@ public:
     ~Player() {}
 
     void _init() {}
+    void enable_input() { input_enabled = true;}
+    void disable_input() { input_enabled = false; }
     bool add_item_to_inventory(String item);
     void add_items_to_inventory(Array items);
     void remove_items_from_inventory(Array items);
     bool inventory_has_items(Array items);
-    String get_prompt() const { if(!current_interactable) return ""; return current_interactable->get_prompt((Player*)this); };
+    String get_prompt() const { if(!current_interactable || !input_enabled) return ""; return current_interactable->get_prompt((Player*)this); };
 
 protected:
     void _ready();

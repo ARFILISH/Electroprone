@@ -13,6 +13,7 @@ class Interactable : public Area2D {
 public:
     Array needed_items {};
     bool consume_items = true;
+    bool may_interact = true;
 protected:
     int max_interacts = 0;
     String prompt = "Press Enter to interact";
@@ -32,6 +33,7 @@ public:
         register_method("get_prompt", &Interactable::get_prompt);
         register_property<Interactable, Array>("needed_items", &Interactable::needed_items, {});
         register_property<Interactable, bool>("consume_items", &Interactable::consume_items, true);
+        register_property<Interactable, bool>("may_interact", &Interactable::may_interact, true);
         register_property<Interactable, int>("max_interacts", &Interactable::max_interacts, 0);
         register_property<Interactable, String>("prompt", &Interactable::prompt, "Press Enter to interact");
         register_property<Interactable, String>("failed_prompt", &Interactable::failed_prompt, "");
