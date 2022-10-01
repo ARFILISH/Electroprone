@@ -27,6 +27,8 @@ public:
         register_method("_init", &Interactable::_init);
         register_method("interact", &Interactable::interact);
         register_method("_ready", &Interactable::_ready);
+        register_method("on_interacted", &Interactable::on_interacted);
+        register_method("can_interact", &Interactable::can_interact);
         register_method("get_prompt", &Interactable::get_prompt);
         register_property<Interactable, Array>("needed_items", &Interactable::needed_items, {});
         register_property<Interactable, bool>("consume_items", &Interactable::consume_items, true);
@@ -43,12 +45,12 @@ public:
     void _init();
     void interact(Node* interacted);
     void reset_interaction_count();
-    bool can_interact(Node* interacted) const;
+    virtual bool can_interact(Node* interacted) const;
     String get_prompt(Node* interacted) const { return can_interact(interacted) ? prompt : failed_prompt; }
 
 protected:
     void _ready();
-    void on_interacted(Node* interacted) {}
+    virtual void on_interacted(Node* interacted) {}
 };
 
 }

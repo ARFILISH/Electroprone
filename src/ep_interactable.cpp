@@ -32,8 +32,9 @@ void Interactable::reset_interaction_count() {
 }
 
 bool Interactable::can_interact(Node* interacted) const {
+    if(!this) return false;
     Player* plr = Object::cast_to<Player>(interacted);
     if(!plr) return false;
-    if(!(needed_items.empty() || plr->inventory_has_items(needed_items))) return false;
+    if(needed_items.empty() || plr->inventory_has_items(needed_items)) return true;
     return true;
 }

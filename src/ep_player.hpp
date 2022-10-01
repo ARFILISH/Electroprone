@@ -41,6 +41,7 @@ private:
 public:
     static void _register_methods() {
         register_method("_ready", &Player::_ready);
+        register_method("_process", &Player::_process);
         register_method("_physics_process", &Player::_physics_process);
         register_method("update_interactions", &Player::update_interactions);
         register_method("interact", &Player::interact);
@@ -48,6 +49,8 @@ public:
         register_method("add_items_to_inventory", &Player::add_items_to_inventory);
         register_method("remove_items_from_inventory", &Player::remove_items_from_inventory);
         register_method("inventory_has_items", &Player::inventory_has_items);
+        register_method("inventory_has_items", &Player::inventory_has_items);
+        register_method("get_prompt", &Player::get_prompt);
         register_property<Player, float>("walk_speed", &Player::walk_speed, 200.f);
         register_property<Player, float>("run_speed", &Player::run_speed, 450.f);
         register_property<Player, float>("interaction_distance", &Player::interaction_distance, 50.f);
@@ -65,9 +68,11 @@ public:
     void add_items_to_inventory(Array items);
     void remove_items_from_inventory(Array items);
     bool inventory_has_items(Array items);
+    String get_prompt() const { if(!current_interactable) return ""; return current_interactable->get_prompt((Player*)this); };
 
 protected:
     void _ready();
+    void _process(float delta);
     void _physics_process(float delta);
     
     void update_interactions();

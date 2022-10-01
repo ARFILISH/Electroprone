@@ -36,6 +36,10 @@ void Player::_ready() {
     interaction_raycast->set_cast_to(dir.normalized() * interaction_distance);
 }
 
+void Player::_process(float delta) {
+    update_interactions();
+}
+
 void Player::_physics_process(float delta) {
     Input* input = Input::get_singleton();
 
@@ -45,8 +49,6 @@ void Player::_physics_process(float delta) {
     velocity = input_axis * (is_running ? run_speed : walk_speed);
 
     move_and_slide(velocity);
-
-    update_interactions();
     if(input->is_action_just_pressed("interact"))
         interact();
 }
@@ -60,7 +62,7 @@ void Player::update_interactions() {
 }
 
 void Player::interact() {
-    if(!current_interactable || !current_interactable->can_interact(this)) return;
+    if(!(current_interactable && current_interactable->can_interact(this))) return;
     current_interactable->interact(this);
 }
 

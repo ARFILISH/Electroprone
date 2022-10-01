@@ -40,3 +40,16 @@ margin_bottom = 18.0
 text = "10 seconds remaining"
 align = 1
 valign = 1
+
+[node name="PromptLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -197.5
+margin_top = -76.0
+margin_right = 197.5
+margin_bottom = -62.0
+text = "Lol"
+align = 1
+valign = 1

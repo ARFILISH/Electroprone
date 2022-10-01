@@ -15,17 +15,18 @@ public:
     static void _register_methods() {
         register_method("on_interacted", &Pickupable::on_interacted);
         register_method("can_interact", &Pickupable::can_interact);
+        register_property<Pickupable, String>("id", &Pickupable::id, "default_id");
+        register_signal<Pickupable>("picked_up");
     }
 
     Pickupable() {}
     ~Pickupable() {}
 
     void _init() {}
-
-    bool can_interact(Node* interacted) const;
+    virtual bool can_interact(Node* interacted) const override;
     
 protected:
-    void on_interacted(Node* interacted);
+    virtual void on_interacted(Node* interacted) override;
 
 };
 

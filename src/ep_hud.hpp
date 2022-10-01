@@ -9,6 +9,7 @@ namespace godot {
 class ElectricTimer;
 class TextureProgress;
 class Label;
+class Player;
 
 class HUD : public Control {
     GODOT_CLASS(HUD, Control);
@@ -17,7 +18,8 @@ protected:
     ElectricTimer* electric_timer;
     TextureProgress* electric_progress_bar;
     Label* electric_text;
-
+    Label* interaction_text;
+    Player* player;
 
 public:
     static void _register_methods() {
