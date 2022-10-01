@@ -2,6 +2,7 @@
 
 #include "ep_player.hpp"
 #include "ep_interactable.hpp"
+#include "ep_gate.hpp"
 
 using namespace godot;
 
@@ -18,4 +19,5 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
 
     register_class<Player>();
     register_class<Interactable>();
+    register_class<Gate>();
 }
