@@ -8,19 +8,10 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "Player",
-"language": "NativeScript",
-"path": "res://scripts/player.gdns"
-} ]
-_global_script_class_icons={
-"Player": ""
-}
-
 [application]
 
 config/name="Electroprone"
+run/main_scene="res://scenes/levels/test_level.tscn"
 config/icon="res://icon.png"
 
 [input]

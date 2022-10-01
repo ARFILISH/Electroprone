@@ -1,6 +1,5 @@
 #include "ep_player.hpp"
 #include <Input.hpp>
-#include "ep_interactable.hpp"
 
 using namespace godot;
 
@@ -8,25 +7,33 @@ void Player::_ready() {
     interaction_raycast = get_node<RayCast2D>("InteractionRayCast");
     Vector2 dir;
     switch(move_dir) {
-        case FORWARD:
+        case 0:
             dir = Vector2(0.f, -1.f);
-        case BACKWARD:
+            break;
+        case 1:
             Vector2(0.f, 1.f);
-        case RIGHT:
+            break;
+        case 2:
             dir = Vector2(1.f, 0.f);
-        case LEFT:
+            break;
+        case 3:
             Vector2(-1.f, 0.f);
-        case FORWARD_RIGHT:
+            break;
+        case 4:
             dir = Vector2(1.f, -1.f);
-        case FORWARD_LEFT:
+            break;
+        case 5:
             Vector2(-1.f, -1.f);
-        case BACKWARD_RIGHT:
+            break;
+        case 6:
             dir = Vector2(1.f, 1.f);
-        case BACKWARD_LEFT:
+            break;
+        case 7:
             Vector2(-1.f, 1.f);
+            break;
     }
 
-    interaction_raycast->set_cast_to(dir * interaction_distance);
+    interaction_raycast->set_cast_to(dir.normalized() * interaction_distance);
 }
 
 void Player::_physics_process(float delta) {
@@ -40,14 +47,16 @@ void Player::_physics_process(float delta) {
     move_and_slide(velocity);
 
     update_interactions();
+    if(input->is_action_just_pressed("interact"))
+        interact();
 }
 
 void Player::update_interactions() {
     if(!interaction_raycast) return;
 
     if(velocity != Vector2::ZERO) interaction_raycast->set_cast_to(velocity.normalized() * interaction_distance);
-    if(interaction_raycast->is_colliding() && (IInteractable*)interaction_raycast->get_collider())
-        current_interactable = (IInteractable*)interaction_raycast->get_collider();
+    if(interaction_raycast->is_colliding() && Object::cast_to<Interactable>(interaction_raycast->get_collider()))
+        current_interactable = Object::cast_to<Interactable>(interaction_raycast->get_collider());
     else current_interactable = nullptr;
 }
 

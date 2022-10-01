@@ -1,6 +1,7 @@
 #include <Godot.hpp>
 
 #include "ep_player.hpp"
+#include "ep_interactable.hpp"
 
 using namespace godot;
 
@@ -16,4 +17,5 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
     Godot::nativescript_init(handle);
 
     register_class<Player>();
+    register_class<Interactable>();
 }

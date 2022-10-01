@@ -4,8 +4,7 @@
 #include <Godot.hpp>
 #include <KinematicBody2D.hpp>
 #include <RayCast2D.hpp>
-
-class IInteractable;
+#include "ep_interactable.hpp"
 
 namespace godot {
 
@@ -32,7 +31,7 @@ protected:
     int move_dir = MOVE_DIRECTION::FORWARD;
 
     RayCast2D* interaction_raycast;
-    IInteractable* current_interactable = nullptr;
+    Interactable* current_interactable = nullptr;
 
 private:
     Vector2 velocity = Vector2::ZERO;

@@ -18,5 +18,5 @@ texture = ExtResource( 2 )
 
 [node name="InteractionRayCast" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 0, -50 )
+cast_to = Vector2( 0, 0 )
 collide_with_areas = true
