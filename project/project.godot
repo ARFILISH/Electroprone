@@ -9,25 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "CharacterMovement",
-"language": "NativeScript",
-"path": "res://gdnative/character_movement.gdns"
-}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "NativeScript",
-"path": "res://gdnative/player.gdns"
+"path": "res://scripts/player.gdns"
 } ]
 _global_script_class_icons={
-"CharacterMovement": "",
 "Player": ""
 }
 
 [application]
 
-config/name="Ludum Dare Game"
-run/main_scene="res://Node2D.tscn"
+config/name="Electroprone"
 config/icon="res://icon.png"
 
 [input]
@@ -55,5 +48,10 @@ move_left={
 run={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+interact={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
