@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spr_hud_electricbar_bg.png-685e1f4d1995b46885fbb1c245472f76.stex"
+path="res://.import/spr_player.png-5a8a0dd67c63d08652a3cb7ffacd71fe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/hud/spr_hud_electricbar_bg.png"
-dest_files=[ "res://.import/spr_hud_electricbar_bg.png-685e1f4d1995b46885fbb1c245472f76.stex" ]
+source_file="res://sprites/player/spr_player.png"
+dest_files=[ "res://.import/spr_player.png-5a8a0dd67c63d08652a3cb7ffacd71fe.stex" ]
 
 [params]
 

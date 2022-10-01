@@ -1,34 +1,36 @@
 #include "ep_player.hpp"
 #include <Input.hpp>
+#include <AnimationPlayer.hpp>
 
 using namespace godot;
 
 void Player::_ready() {
     interaction_raycast = get_node<RayCast2D>("InteractionRayCast");
+    anim_player = get_node<AnimationPlayer>("AnimationPlayer");
     Vector2 dir;
     switch(move_dir) {
-        case 0:
+        case FORWARD:
             dir = Vector2(0.f, -1.f);
             break;
-        case 1:
+        case BACKWARD:
             Vector2(0.f, 1.f);
             break;
-        case 2:
+        case RIGHT:
             dir = Vector2(1.f, 0.f);
             break;
-        case 3:
+        case LEFT:
             Vector2(-1.f, 0.f);
             break;
-        case 4:
+        case FORWARD_RIGHT:
             dir = Vector2(1.f, -1.f);
             break;
-        case 5:
+        case FORWARD_LEFT:
             Vector2(-1.f, -1.f);
             break;
-        case 6:
+        case BACKWARD_RIGHT:
             dir = Vector2(1.f, 1.f);
             break;
-        case 7:
+        case BACKWARD_LEFT:
             Vector2(-1.f, 1.f);
             break;
     }
@@ -38,6 +40,8 @@ void Player::_ready() {
 
 void Player::_process(float delta) {
     update_interactions();
+
+
 }
 
 void Player::_physics_process(float delta) {
@@ -51,6 +55,7 @@ void Player::_physics_process(float delta) {
     velocity = input_axis * (is_running ? run_speed : walk_speed);
 
     move_and_slide(velocity);
+    update_animations();
     if(input->is_action_just_pressed("interact"))
         interact();
 }
@@ -61,6 +66,51 @@ void Player::update_interactions() {
     if(velocity != Vector2::ZERO) interaction_raycast->set_cast_to(velocity.normalized() * interaction_distance);
     if(!(current_interactable = Object::cast_to<Interactable>(interaction_raycast->get_collider())))
         current_interactable = nullptr;
+}
+
+void Player::update_animations() {
+    if(!anim_player) return;
+
+    Vector2 vel_norm = velocity.normalized();
+    
+    if(velocity != Vector2::ZERO) {
+        if(vel_norm == Vector2(1.f, 0.f)) move_dir = RIGHT;
+        else if (vel_norm == Vector2(0.35f, 0.35f)) move_dir = BACKWARD_RIGHT;
+        else if (vel_norm == Vector2(0.35f, -0.35f)) move_dir = FORWARD_RIGHT;
+        else if (vel_norm == Vector2(-1.f, 0.f)) move_dir = LEFT;
+        else if (vel_norm == Vector2(-0.35f, 0.35f)) move_dir = BACKWARD_LEFT;
+        else if (vel_norm == Vector2(-0.35f, -0.35f)) move_dir = FORWARD_LEFT;
+        else if (vel_norm == Vector2(0.f, 1.f)) move_dir = BACKWARD;
+        else if (vel_norm == Vector2(0.f, -1.f)) move_dir = FORWARD;
+    }
+
+    String anim_direction;
+    switch(move_dir) {
+        case FORWARD:
+            anim_direction = "forward";
+            break;
+        case BACKWARD:
+            anim_direction = "backward";
+            break;
+        case RIGHT:
+            anim_direction = "right";
+            break;
+        case LEFT:
+            anim_direction = "left";
+            break;
+        case FORWARD_RIGHT:
+        case BACKWARD_LEFT:
+        case FORWARD_LEFT:
+        case BACKWARD_RIGHT:
+            break;
+    }
+
+    String anim_speed;
+    if(velocity.length() <= walk_speed / 4) anim_speed = "idle_";
+    else if(velocity.length() > walk_speed / 4 && velocity.length() <= (walk_speed + run_speed) / 2) anim_speed = "walk_";
+    else anim_speed = "run_";
+
+    anim_player->set_current_animation(anim_speed + anim_direction);
 }
 
 void Player::interact() {

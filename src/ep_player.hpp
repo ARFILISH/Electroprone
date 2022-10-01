@@ -8,6 +8,8 @@
 
 namespace godot {
 
+class AnimationPlayer;
+
 enum MOVE_DIRECTION {
     FORWARD = 0,
     BACKWARD = 1,
@@ -31,6 +33,7 @@ protected:
     int move_dir = MOVE_DIRECTION::FORWARD;
 
     RayCast2D* interaction_raycast;
+    AnimationPlayer* anim_player;
     Interactable* current_interactable = nullptr;
 
 private:
@@ -45,6 +48,7 @@ public:
         register_method("_process", &Player::_process);
         register_method("_physics_process", &Player::_physics_process);
         register_method("update_interactions", &Player::update_interactions);
+        register_method("update_animations", &Player::update_animations);
         register_method("interact", &Player::interact);
         register_method("enable_input", &Player::enable_input);
         register_method("disable_input", &Player::disable_input);
@@ -82,6 +86,7 @@ protected:
     void _physics_process(float delta);
     
     void update_interactions();
+    void update_animations();
     void interact();
 };
 

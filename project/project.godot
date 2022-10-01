@@ -30,6 +30,15 @@ config/name="Electroprone"
 run/main_scene="res://scenes/levels/test_level.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=640
+window/size/height=360
+window/size/resizable=false
+window/size/fullscreen=true
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [input]
 
 move_up={

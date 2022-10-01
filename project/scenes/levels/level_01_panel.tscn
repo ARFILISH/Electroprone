@@ -15,7 +15,7 @@ margin_left = -0.256012
 margin_top = -0.200005
 margin_right = 0.255981
 margin_bottom = 0.199951
-rect_min_size = Vector2( 320, 400 )
+rect_min_size = Vector2( 80, 100 )
 rect_pivot_offset = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -36,10 +36,10 @@ needed_number = 2
 one_shot = true
 
 [node name="CheckButton2" type="CheckButton" parent="."]
-margin_left = 27.0
-margin_top = 26.0
-margin_right = 103.0
-margin_bottom = 66.0
+margin_left = 24.096
+margin_top = 21.08
+margin_right = 100.096
+margin_bottom = 61.08
 focus_mode = 0
 theme = SubResource( 1 )
 shortcut_in_tooltip = false
@@ -49,10 +49,10 @@ enabled_focus_mode = 0
 script = ExtResource( 3 )
 
 [node name="CheckButton" type="CheckButton" parent="."]
-margin_left = 160.0
-margin_top = 17.0
-margin_right = 236.0
-margin_bottom = 57.0
+margin_left = 102.096
+margin_top = 26.08
+margin_right = 178.096
+margin_bottom = 66.08
 focus_mode = 0
 theme = SubResource( 1 )
 shortcut_in_tooltip = false

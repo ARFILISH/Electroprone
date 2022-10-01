@@ -47,7 +47,6 @@ __meta__ = {
 position = Vector2( 164, 294 )
 script = ExtResource( 3 )
 consume_items = false
-may_interact = false
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
 texture = ExtResource( 2 )
@@ -70,7 +69,14 @@ inventory = [ "default_id" ]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
+process_mode = 0
 smoothing_enabled = true
+smoothing_speed = 10.0
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+editor_draw_limits = true
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -92,6 +98,7 @@ script = ExtResource( 7 )
 canvas_path = NodePath("../CanvasLayer")
 panel_scene = ExtResource( 8 )
 
+[connection signal="interacted_no_args" from="Area2D" to="Timer" method="start" binds= [ 10.0 ]]
 [connection signal="interacted_no_args" from="Area2D" to="Node2" method="show"]
 [connection signal="gate_opened" from="Node" to="Area2D" method="queue_free"]
 [connection signal="timeout" from="Timer" to="Timer" method="start" binds= [ 10 ]]
