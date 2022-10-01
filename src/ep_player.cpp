@@ -41,6 +41,8 @@ void Player::_process(float delta) {
 }
 
 void Player::_physics_process(float delta) {
+    if(!input_enabled) return;
+    
     Input* input = Input::get_singleton();
 
     is_running = input->is_action_pressed("run");
@@ -54,7 +56,7 @@ void Player::_physics_process(float delta) {
 }
 
 void Player::update_interactions() {
-    if(!interaction_raycast) return;
+    if(!(interaction_raycast && input_enabled)) return;
 
     if(velocity != Vector2::ZERO) interaction_raycast->set_cast_to(velocity.normalized() * interaction_distance);
     if(!(current_interactable = Object::cast_to<Interactable>(interaction_raycast->get_collider())))
@@ -62,7 +64,7 @@ void Player::update_interactions() {
 }
 
 void Player::interact() {
-    if(!(current_interactable && current_interactable->can_interact(this))) return;
+    if(!(input_enabled && current_interactable && current_interactable->can_interact(this))) return;
     current_interactable->interact(this);
 }
 

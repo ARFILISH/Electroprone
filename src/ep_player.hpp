@@ -25,6 +25,7 @@ public:
     float walk_speed = 200.f;
     float run_speed = 450.f;
     float interaction_distance = 50.f;
+    bool input_enabled = true;
 
 protected:
     bool is_running = false;
@@ -51,6 +52,7 @@ public:
         register_method("inventory_has_items", &Player::inventory_has_items);
         register_method("inventory_has_items", &Player::inventory_has_items);
         register_method("get_prompt", &Player::get_prompt);
+        register_property<Player, bool>("input_enabled", &Player::input_enabled, true);
         register_property<Player, float>("walk_speed", &Player::walk_speed, 200.f);
         register_property<Player, float>("run_speed", &Player::run_speed, 450.f);
         register_property<Player, float>("interaction_distance", &Player::interaction_distance, 50.f);
