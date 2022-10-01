@@ -16,6 +16,7 @@ private:
 
 public:
     static void _register_methods() {
+        register_method("_init", &Gate::_init);
         register_method("add_number", &Gate::add_number);
         register_method("subtract_number", &Gate::subtract_number);
         register_property<Gate, int>("needed_number", &Gate::needed_number, 3);
@@ -26,11 +27,10 @@ public:
     Gate() {}
     ~Gate() {}
 
-    void _init() {}
+    void _init();
 
     void add_number();
     void subtract_number();
-    void reset();
     void set_number(int num_to_set);
 
 };

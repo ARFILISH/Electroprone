@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/objects/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://scripts/gameplay/interactable.gdns" type="Script" id=3]
-[ext_resource path="res://scripts/level/gate.gdns" type="Script" id=4]
+[ext_resource path="res://scripts/level/sequence.gdns" type="Script" id=4]
+[ext_resource path="res://scenes/objects/hud.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/level/electric_timer.gdns" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 36.5, 40.5 )
+extents = Vector2( 68.5, 40.5 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -35,20 +37,19 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 0/z_index = 0
 
 [node name="TestLevel" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 448, 304 )
-move_dir = 0
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 164, 288 )
+position = Vector2( 164, 294 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Area2D"]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 1.5, -1.5 )
+position = Vector2( 33.5, -1.5 )
 shape = SubResource( 3 )
 
 [node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Area2D"]
@@ -58,7 +59,27 @@ tile_set = SubResource( 1 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 65536, 0, 0, 65538, 0, 0, 65551, 0, 0, 131072, 0, 0, 131074, 0, 0, 131087, 0, 0, 196608, 0, 0, 196623, 0, 0, 262144, 0, 0, 262159, 0, 0, 327680, 0, 0, 327695, 0, 0, 393216, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 458752, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0 )
 
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 448, 304 )
+move_dir = 0
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+smoothing_enabled = true
+
 [node name="Node" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[connection signal="interacted" from="Area2D" to="Node" method="add_number"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+script = ExtResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 5 )]
+margin_left = 0.0
+margin_right = 0.0
+timer_path = NodePath("../../Timer")
+
+[connection signal="interacted_no_args" from="Area2D" to="Timer" method="start" binds= [ 10.0 ]]
+[connection signal="sequence_3" from="Node" to="Area2D" method="queue_free"]

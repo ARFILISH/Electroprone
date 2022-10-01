@@ -9,13 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "",
+"base": "Node",
 "class": "Gate",
 "language": "NativeScript",
 "path": "res://scripts/level/gate.gdns"
+}, {
+"base": "Node",
+"class": "Sequence",
+"language": "NativeScript",
+"path": "res://scripts/level/sequence.gdns"
 } ]
 _global_script_class_icons={
-"Gate": ""
+"Gate": "",
+"Sequence": ""
 }
 
 [application]

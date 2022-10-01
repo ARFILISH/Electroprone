@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sprites/hud/spr_hud_electricbar_pb.png" type="Texture" id=1]
+[ext_resource path="res://sprites/hud/spr_hud_electricbar_bg.png" type="Texture" id=2]
+[ext_resource path="res://scripts/player/hud.gdns" type="Script" id=3]
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+script = ExtResource( 3 )
+
+[node name="ElectricProgressBar" type="TextureProgress" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -197.5
+margin_top = -44.0
+margin_right = 197.5
+margin_bottom = -12.0
+max_value = 10.0
+step = 0.01
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 1 )
+nine_patch_stretch = true
+stretch_margin_left = 8
+stretch_margin_top = 8
+stretch_margin_right = 8
+stretch_margin_bottom = 8
+
+[node name="ElectricLabel" type="Label" parent="ElectricProgressBar"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -197.5
+margin_top = -20.0
+margin_right = 197.5
+margin_bottom = -6.0
+text = "10 seconds remaining"
+align = 1
+valign = 1
