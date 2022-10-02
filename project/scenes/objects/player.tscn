@@ -384,6 +384,8 @@ anims/walk_right = SubResource( 14 )
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource( 15 )
-volume_db = 0.05
+volume_db = 0.2
 pitch_scale = 0.6
 max_distance = 50.0
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]

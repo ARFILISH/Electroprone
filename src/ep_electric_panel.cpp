@@ -12,7 +12,6 @@ void ElectricPanel::_ready() {
     main_gate->connect("gate_opened", this, "complete");
     tween = get_node<Tween>("Tween");
     close_timer = get_node<Timer>("CloseTimer");
-    close_timer->connect("timeout", this, "queue_free");
     sound_player = get_node<AudioStreamPlayer>("SoundPlayer");
 }
 
@@ -38,6 +37,7 @@ void ElectricPanel::hide_panel() {
     tween->interpolate_property(this, "modulate", Color(1.f, 1.f, 1.f, 1.f), Color(1.f, 1.f, 1.f, 0.f), anim_duration);
     tween->start();
     close_timer->start(anim_duration);
+    if(!close_timer->is_connected("timeout", this, "queue_free")) close_timer->connect("timeout", this, "queue_free");
     if(sound_player) {
         sound_player->set_stream(hide_sound);
         sound_player->play();

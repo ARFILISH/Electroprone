@@ -1,10 +1,40 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/gameplay/electric_panel.gdns" type="Script" id=1]
 [ext_resource path="res://scripts/level/gate.gdns" type="Script" id=2]
 [ext_resource path="res://scripts/level/bool_gate.gdns" type="Script" id=3]
+[ext_resource path="res://scripts/level/range_gate.gdns" type="Script" id=4]
+[ext_resource path="res://sprites/hud/spr_ui_electric_panel_bg.png" type="Texture" id=5]
+[ext_resource path="res://sprites/hud/spr_ui_electric_panel_slider.png" type="Texture" id=6]
+[ext_resource path="res://sprites/hud/spr_ui_electric_panel_thumbler_off.png" type="Texture" id=7]
+[ext_resource path="res://sprites/hud/spr_ui_electric_panel_thumbler_on.png" type="Texture" id=8]
+[ext_resource path="res://sound/hud/snd_electric_panel_thumb.ogg" type="AudioStream" id=9]
+[ext_resource path="res://sound/hud/snd_electric_panel_hide.ogg" type="AudioStream" id=10]
+[ext_resource path="res://sound/hud/snd_electric_panel_show.ogg" type="AudioStream" id=11]
+[ext_resource path="res://sound/hud/snd_electric_panel_slider.ogg" type="AudioStream" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.337255, 0.188235, 0.317647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 4
+border_width_top = 1
+border_width_right = 4
+border_width_bottom = 1
+border_color = Color( 0.12549, 0.12549, 0.12549, 1 )
 
 [sub_resource type="Theme" id=1]
+CheckButton/icons/off = ExtResource( 7 )
+CheckButton/icons/on = ExtResource( 8 )
+HSeparator/styles/separator = SubResource( 4 )
+VSlider/icons/grabber = ExtResource( 6 )
+VSlider/icons/grabber_disabled = ExtResource( 6 )
+VSlider/icons/grabber_highlight = ExtResource( 6 )
+VSlider/styles/grabber_area = SubResource( 3 )
+VSlider/styles/slider = SubResource( 2 )
 
 [node name="Level01Panel" type="Control"]
 anchor_left = 0.344
@@ -13,18 +43,22 @@ anchor_right = 0.656
 anchor_bottom = 0.833
 margin_left = -0.256012
 margin_top = -0.200005
-margin_right = 0.255981
-margin_bottom = 0.199951
+margin_right = 0.383911
+margin_bottom = 0.279968
 rect_min_size = Vector2( 80, 100 )
 rect_pivot_offset = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
+theme = SubResource( 1 )
 script = ExtResource( 1 )
+show_sound = ExtResource( 11 )
+hide_sound = ExtResource( 10 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+self_modulate = Color( 0.435294, 0.435294, 0.435294, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.121569, 0.121569, 0.121569, 1 )
+texture = ExtResource( 5 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -33,41 +67,281 @@ one_shot = true
 
 [node name="MainGate" type="Node" parent="."]
 script = ExtResource( 2 )
-needed_number = 2
-
-[node name="CheckButton2" type="CheckButton" parent="."]
-margin_left = 24.096
-margin_top = 21.08
-margin_right = 100.096
-margin_bottom = 61.08
-focus_mode = 0
-theme = SubResource( 1 )
-shortcut_in_tooltip = false
-enabled_focus_mode = 0
-
-[node name="Bool" type="Node" parent="CheckButton2"]
-script = ExtResource( 3 )
-
-[node name="CheckButton" type="CheckButton" parent="."]
-margin_left = 102.096
-margin_top = 26.08
-margin_right = 178.096
-margin_bottom = 66.08
-focus_mode = 0
-theme = SubResource( 1 )
-shortcut_in_tooltip = false
-pressed = true
-enabled_focus_mode = 0
-
-[node name="Bool" type="Node" parent="CheckButton"]
-script = ExtResource( 3 )
-opened = true
+needed_number = 7
 
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
 
-[connection signal="toggled" from="CheckButton2" to="CheckButton2/Bool" method="set_opened"]
-[connection signal="gate_closed" from="CheckButton2/Bool" to="MainGate" method="subtract_number"]
-[connection signal="gate_opened" from="CheckButton2/Bool" to="MainGate" method="add_number"]
-[connection signal="toggled" from="CheckButton" to="CheckButton/Bool" method="set_opened"]
-[connection signal="gate_closed" from="CheckButton/Bool" to="MainGate" method="add_number"]
-[connection signal="gate_opened" from="CheckButton/Bool" to="MainGate" method="subtract_number"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.095
+anchor_top = 0.162
+anchor_right = 0.905
+anchor_bottom = 0.5
+margin_left = -1.52588e-05
+margin_top = 0.239998
+margin_bottom = 162.0
+
+[node name="VSlider" type="VSlider" parent="HBoxContainer"]
+margin_right = 24.0
+margin_bottom = 324.0
+max_value = 10.0
+value = 9.0
+rounded = true
+scrollable = false
+tick_count = 10
+
+[node name="RangeGate" type="Node" parent="HBoxContainer/VSlider"]
+script = ExtResource( 4 )
+min_value = 5.0
+current_value = 9.0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VSlider"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.42
+anchor_right = 0.5
+anchor_bottom = 0.42
+margin_left = -12.0
+margin_top = -0.0800018
+margin_right = 12.0
+margin_bottom = 19.92
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="VSlider2" type="VSlider" parent="HBoxContainer"]
+margin_left = 28.0
+margin_right = 52.0
+margin_bottom = 324.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+max_value = 10.0
+rounded = true
+scrollable = false
+tick_count = 10
+
+[node name="RangeGate" type="Node" parent="HBoxContainer/VSlider2"]
+script = ExtResource( 4 )
+min_value = 2.0
+max_value = 3.0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VSlider2"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.707
+anchor_right = 0.5
+anchor_bottom = 0.707
+margin_left = -12.064
+margin_top = -0.107986
+margin_right = 11.936
+margin_bottom = 19.892
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
+margin_left = 56.0
+margin_right = 59.0
+margin_bottom = 324.0
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
+margin_left = 63.0
+margin_right = 66.0
+margin_bottom = 324.0
+
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer"]
+margin_left = 70.0
+margin_right = 73.0
+margin_bottom = 324.0
+
+[node name="CheckButton3" type="CheckButton" parent="HBoxContainer"]
+margin_left = 77.0
+margin_right = 153.0
+margin_bottom = 324.0
+focus_mode = 0
+enabled_focus_mode = 0
+
+[node name="Gate" type="Node" parent="HBoxContainer/CheckButton3"]
+script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/CheckButton3"]
+show_behind_parent = true
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -10.0
+margin_bottom = 10.0
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer"]
+margin_left = 157.0
+margin_right = 160.0
+margin_bottom = 324.0
+
+[node name="HSeparator5" type="HSeparator" parent="HBoxContainer"]
+margin_left = 164.0
+margin_right = 167.0
+margin_bottom = 324.0
+
+[node name="HSeparator6" type="HSeparator" parent="HBoxContainer"]
+margin_left = 171.0
+margin_right = 174.0
+margin_bottom = 324.0
+
+[node name="VSlider3" type="VSlider" parent="HBoxContainer"]
+margin_left = 178.0
+margin_right = 202.0
+margin_bottom = 324.0
+max_value = 10.0
+value = 5.0
+rounded = true
+scrollable = false
+tick_count = 10
+
+[node name="RangeGate" type="Node" parent="HBoxContainer/VSlider3"]
+script = ExtResource( 4 )
+min_value = 9.0
+max_value = 10.0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VSlider3"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.096
+anchor_right = 0.5
+anchor_bottom = 0.096
+margin_left = -12.064
+margin_top = -20.144
+margin_right = 11.936
+margin_bottom = -0.143978
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="HSeparator7" type="HSeparator" parent="HBoxContainer"]
+margin_left = 206.0
+margin_right = 209.0
+margin_bottom = 324.0
+
+[node name="HSeparator8" type="HSeparator" parent="HBoxContainer"]
+margin_left = 213.0
+margin_right = 216.0
+margin_bottom = 324.0
+
+[node name="HSeparator9" type="HSeparator" parent="HBoxContainer"]
+margin_left = 220.0
+margin_right = 223.0
+margin_bottom = 324.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 227.0
+margin_right = 303.0
+margin_bottom = 324.0
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer/VBoxContainer"]
+margin_right = 76.0
+margin_bottom = 40.0
+focus_mode = 0
+size_flags_vertical = 2
+pressed = true
+enabled_focus_mode = 0
+
+[node name="Gate" type="Node" parent="HBoxContainer/VBoxContainer/CheckButton"]
+script = ExtResource( 3 )
+opened = true
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/CheckButton"]
+show_behind_parent = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -10.0
+margin_right = 6.0
+margin_bottom = 10.0
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="CheckButton2" type="CheckButton" parent="HBoxContainer/VBoxContainer"]
+margin_top = 142.0
+margin_right = 76.0
+margin_bottom = 182.0
+focus_mode = 0
+enabled_focus_mode = 0
+
+[node name="Gate" type="Node" parent="HBoxContainer/VBoxContainer/CheckButton2"]
+script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/CheckButton2"]
+show_behind_parent = true
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -10.0
+margin_bottom = 10.0
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="CheckButton3" type="CheckButton" parent="HBoxContainer/VBoxContainer"]
+margin_top = 186.0
+margin_right = 76.0
+margin_bottom = 226.0
+focus_mode = 0
+size_flags_vertical = 2
+pressed = true
+enabled_focus_mode = 0
+
+[node name="Gate" type="Node" parent="HBoxContainer/VBoxContainer/CheckButton3"]
+script = ExtResource( 3 )
+opened = true
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/CheckButton3"]
+show_behind_parent = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -10.0
+margin_right = 6.0
+margin_bottom = 10.0
+color = Color( 0, 0.2, 0.0509804, 1 )
+
+[node name="HSeparator10" type="HSeparator" parent="HBoxContainer"]
+margin_left = 307.0
+margin_right = 310.0
+margin_bottom = 324.0
+
+[node name="HSeparator11" type="HSeparator" parent="HBoxContainer"]
+margin_left = 314.0
+margin_right = 317.0
+margin_bottom = 324.0
+
+[node name="HSeparator12" type="HSeparator" parent="HBoxContainer"]
+margin_left = 321.0
+margin_right = 324.0
+margin_bottom = 324.0
+
+[node name="SwitchSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="SliderSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[connection signal="drag_ended" from="HBoxContainer/VSlider" to="SliderSound" method="play"]
+[connection signal="value_changed" from="HBoxContainer/VSlider" to="HBoxContainer/VSlider/RangeGate" method="set_value"]
+[connection signal="gate_closed" from="HBoxContainer/VSlider/RangeGate" to="MainGate" method="subtract_number"]
+[connection signal="gate_opened" from="HBoxContainer/VSlider/RangeGate" to="MainGate" method="add_number"]
+[connection signal="drag_ended" from="HBoxContainer/VSlider2" to="SliderSound" method="play"]
+[connection signal="value_changed" from="HBoxContainer/VSlider2" to="HBoxContainer/VSlider2/RangeGate" method="set_value"]
+[connection signal="gate_closed" from="HBoxContainer/VSlider2/RangeGate" to="MainGate" method="subtract_number"]
+[connection signal="gate_opened" from="HBoxContainer/VSlider2/RangeGate" to="MainGate" method="add_number"]
+[connection signal="pressed" from="HBoxContainer/CheckButton3" to="SwitchSound" method="play" binds= [ 0.0 ]]
+[connection signal="toggled" from="HBoxContainer/CheckButton3" to="HBoxContainer/CheckButton3/Gate" method="set_opened"]
+[connection signal="gate_closed" from="HBoxContainer/CheckButton3/Gate" to="MainGate" method="subtract_number"]
+[connection signal="gate_opened" from="HBoxContainer/CheckButton3/Gate" to="MainGate" method="add_number"]
+[connection signal="drag_ended" from="HBoxContainer/VSlider3" to="SliderSound" method="play"]
+[connection signal="value_changed" from="HBoxContainer/VSlider3" to="HBoxContainer/VSlider3/RangeGate" method="set_value"]
+[connection signal="gate_closed" from="HBoxContainer/VSlider3/RangeGate" to="MainGate" method="subtract_number"]
+[connection signal="gate_opened" from="HBoxContainer/VSlider3/RangeGate" to="MainGate" method="add_number"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/CheckButton" to="SwitchSound" method="play" binds= [ 0.0 ]]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckButton" to="HBoxContainer/VBoxContainer/CheckButton/Gate" method="set_opened"]
+[connection signal="gate_closed" from="HBoxContainer/VBoxContainer/CheckButton/Gate" to="MainGate" method="add_number"]
+[connection signal="gate_opened" from="HBoxContainer/VBoxContainer/CheckButton/Gate" to="MainGate" method="remove_number"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/CheckButton2" to="SwitchSound" method="play" binds= [ 0.0 ]]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckButton2" to="HBoxContainer/VBoxContainer/CheckButton2/Gate" method="set_opened"]
+[connection signal="gate_closed" from="HBoxContainer/VBoxContainer/CheckButton2/Gate" to="MainGate" method="subtract_number"]
+[connection signal="gate_opened" from="HBoxContainer/VBoxContainer/CheckButton2/Gate" to="MainGate" method="add_number"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/CheckButton3" to="SwitchSound" method="play" binds= [ 0.0 ]]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/CheckButton3" to="HBoxContainer/VBoxContainer/CheckButton3/Gate" method="set_opened"]
+[connection signal="gate_closed" from="HBoxContainer/VBoxContainer/CheckButton3/Gate" to="MainGate" method="add_number"]
+[connection signal="gate_opened" from="HBoxContainer/VBoxContainer/CheckButton3/Gate" to="MainGate" method="subtract_number"]

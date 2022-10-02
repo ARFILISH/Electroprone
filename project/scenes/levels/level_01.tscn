@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://scenes/objects/electric_panel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/house/tileset_house_base.tres" type="TileSet" id=2]
@@ -16,9 +16,58 @@
 [ext_resource path="res://sprites/house/spr_house_bedside_lamp.png" type="Texture" id=14]
 [ext_resource path="res://sprites/house/spr_house_bedside_table..png" type="Texture" id=15]
 [ext_resource path="res://sprites/house/spr_house_bed.png" type="Texture" id=16]
+[ext_resource path="res://scripts/level/gate.gdns" type="Script" id=17]
+[ext_resource path="res://scripts/gameplay/interactable.gdns" type="Script" id=18]
+[ext_resource path="res://scripts/gameplay/pickpable.gdns" type="Script" id=19]
+[ext_resource path="res://sprites/house/spr_house_dirt_32x.png" type="Texture" id=20]
+[ext_resource path="res://sprites/gameplay/spr_object_rag.png" type="Texture" id=21]
+[ext_resource path="res://sprites/gameplay/spr_object_glass_cleaner.png" type="Texture" id=22]
+[ext_resource path="res://scripts/level/count_event.gdns" type="Script" id=23]
+[ext_resource path="res://sprites/gameplay/spr_object_mop.png" type="Texture" id=24]
+[ext_resource path="res://sprites/house/spr_house_entrance_door.png" type="Texture" id=25]
+[ext_resource path="res://sprites/gameplay/spr_object_garbage.png" type="Texture" id=26]
+[ext_resource path="res://sound/objects/snd_pickup_garbage.ogg" type="AudioStream" id=27]
+[ext_resource path="res://sound/objects/snd_put_garbage_into_bin.ogg" type="AudioStream" id=28]
+[ext_resource path="res://sound/objects/snd_clean_glass_cleaner.ogg" type="AudioStream" id=29]
+[ext_resource path="res://sound/objects/snd_pickup_glass_cleaner.ogg" type="AudioStream" id=30]
+[ext_resource path="res://sound/objects/snd_rag.ogg" type="AudioStream" id=31]
+[ext_resource path="res://sound/ambience/snd_electric_panic.ogg" type="AudioStream" id=32]
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 12.5, 12.5 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 16.5, 5 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 6.5, 10.5 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 25.5, 16.5 )
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 20, 17 )
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 15.5, 17 )
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 22, 17 )
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 7, 9.5 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 17, 15.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 9.5, 4 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 4.5, 2.5 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 10, 10.5 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 14 )
@@ -38,26 +87,443 @@ extents = Vector2( 13.75, 6.25 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 23.5, 26.5 )
 
-[node name="Level01" type="Node2D"]
+[sub_resource type="Animation" id=20]
+resource_name = "panic"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.309804, 0.286275, 0.0588235, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("YSort/TileMap/ElectricPanel/ElectricParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
 
-[node name="DeathTimer" type="Timer" parent="."]
+[sub_resource type="Animation" id=21]
+resource_name = "stop_panic"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "GameOver"
+length = 0.7
+tracks/0/type = "method"
+tracks/0/path = NodePath("YSort/TileMap/ElectricPanel/PanelNode")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("YSort/Player")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "disable_input"
+} ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("PanicSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "stop"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ true ],
+"method": "stop"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("CanvasLayer/HUD")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide_hint"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[node name="Level01" type="Node2D"]
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
-autostart = true
+one_shot = true
 script = ExtResource( 13 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 12 )]
 timer_path = NodePath("../../Timer")
+player_path = NodePath("../../YSort/Player")
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -603.0
-margin_top = -324.0
-margin_right = 1554.0
-margin_bottom = 981.0
+margin_left = -566.0
+margin_top = -307.0
+margin_right = 1591.0
+margin_bottom = 998.0
 color = Color( 0, 0, 0, 1 )
+
+[node name="Tasks" type="Node" parent="."]
+script = ExtResource( 17 )
+needed_number = 4
+
+[node name="ClearFridge" type="Area2D" parent="Tasks"]
+position = Vector2( 61, 103 )
+script = ExtResource( 18 )
+needed_items = [ "rag", "glass_cleaner" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 29 )
+prompt = "Press Enter to clear table"
+failed_prompt = "You need a glass cleaner to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearFridge"]
+position = Vector2( 2.5, -10.5 )
+shape = SubResource( 11 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearFridge"]
+
+[node name="ClearKitchenTables" type="Node" parent="Tasks"]
+
+[node name="Gate" type="Node" parent="Tasks/ClearKitchenTables"]
+script = ExtResource( 17 )
+needed_number = 4
+
+[node name="Dirt_Table" type="Sprite" parent="Tasks/ClearKitchenTables"]
+position = Vector2( 137.062, 183.375 )
+scale = Vector2( 0.803113, 0.648437 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 4.38911, -0.762173, 51.1328, 27.463 )
+
+[node name="ClearTable" type="Area2D" parent="Tasks/ClearKitchenTables"]
+position = Vector2( 135, 181 )
+script = ExtResource( 18 )
+needed_items = [ "rag" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to clear table"
+failed_prompt = "You need a rag to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/ClearTable"]
+position = Vector2( 2.5, -1 )
+shape = SubResource( 8 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/ClearTable"]
+
+[node name="Cabinets" type="Node" parent="Tasks/ClearKitchenTables"]
+
+[node name="ClearCabinet_01" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 144, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a rag to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01"]
+
+[node name="ClearCabinet_2_01" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 144, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag", "glass_cleaner" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 29 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a glass cleaner to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+disabled = true
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01"]
+
+[node name="ClearCabinet_02" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 119, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a rag to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02"]
+
+[node name="ClearCabinet_2_02" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 119, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag", "glass_cleaner" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 29 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a glass cleaner to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+disabled = true
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02"]
+
+[node name="ClearCabinet_03" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 93, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a rag to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03"]
+
+[node name="ClearCabinet_2_03" type="Area2D" parent="Tasks/ClearKitchenTables/Cabinets"]
+position = Vector2( 93, 94 )
+script = ExtResource( 18 )
+needed_items = [ "rag", "glass_cleaner" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 29 )
+prompt = "Press Enter to clear cupboard"
+failed_prompt = "You need a glass cleaner to clear cupboard"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03"]
+position = Vector2( -0.5, -1 )
+shape = SubResource( 8 )
+disabled = true
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03"]
+
+[node name="Rag" type="Area2D" parent="Tasks"]
+position = Vector2( 281, 380 )
+script = ExtResource( 19 )
+id = "rag"
+consume_items = false
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to pick up rag"
+
+[node name="SprObjectRag" type="Sprite" parent="Tasks/Rag"]
+texture = ExtResource( 21 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/Rag"]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 9 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/Rag"]
+
+[node name="WashFloor" type="Node" parent="Tasks"]
+script = ExtResource( 17 )
+needed_number = 6
+
+[node name="WashFloor06" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 141, 300 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor06"]
+position = Vector2( 2.5, -6.5 )
+shape = SubResource( 13 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor06"]
+
+[node name="WashFloor03" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 318, 295 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor03"]
+position = Vector2( 3.5, -7.5 )
+shape = SubResource( 11 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor03"]
+
+[node name="WashFloor04" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 78, 162 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor04"]
+position = Vector2( 2, -7 )
+shape = SubResource( 14 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor04"]
+
+[node name="WashFloor05" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 118, 158 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor05"]
+position = Vector2( -2.5, -7 )
+shape = SubResource( 15 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor05"]
+
+[node name="WashFloor01" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 223, 139 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor01"]
+position = Vector2( -2.5, -7 )
+shape = SubResource( 15 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor01"]
+
+[node name="WashFloor02" type="Area2D" parent="Tasks/WashFloor"]
+position = Vector2( 326, 208 )
+script = ExtResource( 18 )
+needed_items = [ "mop" ]
+consume_items = false
+max_interacts = 1
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to wash floor"
+failed_prompt = "You need a mop to wash floor"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor02"]
+position = Vector2( -4, -7 )
+shape = SubResource( 16 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/WashFloor/WashFloor02"]
+
+[node name="GrabGarbage" type="Node" parent="Tasks"]
+script = ExtResource( 17 )
+needed_number = 4
+
+[node name="Trash" type="Area2D" parent="Tasks/GrabGarbage"]
+position = Vector2( 61, 177 )
+script = ExtResource( 18 )
+needed_items = [ "garbage" ]
+interaction_sound = ExtResource( 28 )
+prompt = "Press Enter to put garbage into bin"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/GrabGarbage/Trash"]
+position = Vector2( -8, 17.5 )
+shape = SubResource( 17 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Tasks/GrabGarbage/Trash"]
 
 [node name="YSort" type="YSort" parent="."]
 position = Vector2( 167, 53 )
@@ -69,12 +535,147 @@ cell_quadrant_size = 32
 format = 1
 tile_data = PoolIntArray( 3, 28, 0, 4, 28, 0, 131068, 28, 0, 131069, 28, 0, 131070, 28, 0, 131071, 28, 0, 65536, 28, 0, 65537, 28, 0, 65538, 28, 0, 65539, 28, 0, 65540, 28, 0, 65541, 28, 0, 65542, 28, 0, 196604, 28, 0, 196605, 28, 0, 196606, 28, 0, 196607, 28, 0, 131072, 28, 0, 131073, 28, 0, 131074, 28, 0, 131075, 28, 0, 131076, 28, 0, 131077, 28, 0, 131078, 28, 0, 262140, 28, 0, 262141, 28, 0, 262142, 28, 0, 262143, 28, 0, 196608, 28, 0, 196609, 28, 0, 196610, 28, 0, 196611, 28, 0, 196612, 28, 0, 196613, 28, 0, 196614, 28, 0, 327676, 28, 0, 327677, 28, 0, 327678, 28, 0, 327679, 28, 0, 262144, 28, 0, 262145, 28, 0, 262146, 28, 0, 262147, 28, 0, 262148, 28, 0, 262149, 28, 0, 262150, 28, 0, 327680, 28, 0, 327681, 28, 0, 327682, 28, 0, 327683, 28, 0, 327684, 28, 0, 327685, 28, 0, 327686, 28, 0, 458749, 28, 0, 458750, 28, 0, 458751, 28, 0, 393216, 28, 0, 393217, 28, 0, 393218, 28, 0, 393219, 28, 0, 393220, 28, 0, 393221, 28, 0, 393222, 28, 0, 524285, 28, 0, 524286, 28, 0, 524287, 28, 0, 458752, 28, 0, 458753, 28, 0, 458754, 28, 0, 458755, 28, 0, 458756, 28, 0, 458757, 28, 0, 458758, 28, 0, 589821, 28, 0, 589822, 28, 0, 589823, 28, 0, 524288, 28, 0, 524289, 28, 0, 524290, 28, 0, 524291, 28, 0, 524292, 28, 0, 524293, 28, 0, 524294, 28, 0, 589828, 28, 0, 589829, 28, 0, 589830, 28, 0, 655362, 28, 0, 655363, 28, 0, 655364, 28, 0, 655365, 28, 0, 655366, 28, 0, 655367, 28, 0, 655368, 28, 0, 655369, 28, 0, 720898, 28, 0, 720899, 28, 0, 720900, 28, 0, 720901, 28, 0, 720902, 28, 0, 720903, 28, 0, 720904, 28, 0, 720905, 28, 0, 786434, 28, 0, 786435, 28, 0, 786436, 28, 0, 786437, 28, 0, 786438, 28, 0, 786439, 28, 0, 786440, 28, 0, 786441, 28, 0, 851970, 28, 0, 851971, 28, 0, 851972, 28, 0, 851973, 28, 0, 851974, 28, 0, 851975, 28, 0, 851976, 28, 0, 851977, 28, 0, 917506, 28, 0, 917507, 28, 0, 917508, 28, 0, 917509, 28, 0, 917510, 28, 0, 917511, 28, 0, 917512, 28, 0, 917513, 28, 0 )
 
+[node name="Dirt01" type="Sprite" parent="YSort/Floor"]
+position = Vector2( 55, 79 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32.9628, 33.5926 )
+
+[node name="Dirt02" type="Sprite" parent="YSort/Floor"]
+position = Vector2( 171, 142 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 31.2903, -2.36579, 28.0141, 40.1396 )
+
+[node name="Dirt03" type="Sprite" parent="YSort/Floor/Dirt02"]
+position = Vector2( -30.3067, 14.24 )
+rotation = 1.94604
+scale = Vector2( 1.13512, 1 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 31.2903, -2.36579, 28.0141, 40.1396 )
+
+[node name="Dirt03" type="Sprite" parent="YSort/Floor"]
+position = Vector2( 157, 234 )
+scale = Vector2( 1.92857, 1.26667 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 3.04999, 61.5853, 28.0768, 30.0348 )
+
+[node name="Dirt06" type="Sprite" parent="YSort/Floor"]
+position = Vector2( -26.5357, 249.633 )
+scale = Vector2( 1.27198, 1.16458 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 32.3029, 67.6649, 26.8743, 32.1255 )
+
+[node name="Dirt05" type="Sprite" parent="YSort/Floor"]
+self_modulate = Color( 1, 1, 1, 0.988235 )
+position = Vector2( -49.8761, 94.3051 )
+rotation = -1.97746
+scale = Vector2( 1.0415, 1.27335 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 27.8363, 67.3218, 33.9409, 31.0727 )
+
+[node name="Dirt04" type="Sprite" parent="YSort/Floor"]
+self_modulate = Color( 1, 1, 1, 0.678431 )
+position = Vector2( -88, 104 )
+rotation = -1.05592
+scale = Vector2( 1.45435, 1.37533 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 3.04999, 61.5853, 28.0768, 30.0348 )
+
+[node name="Gargabe01" type="Area2D" parent="YSort/Floor"]
+position = Vector2( 205, 73 )
+script = ExtResource( 19 )
+id = "garbage"
+consume_items = false
+interaction_sound = ExtResource( 27 )
+prompt = "Press Enter to pick up garbage"
+failed_prompt = "You already have a garbage."
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe01"]
+position = Vector2( -4, -7 )
+rotation = -0.55676
+texture = ExtResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Floor/Gargabe01"]
+position = Vector2( -4, -8.5 )
+shape = SubResource( 18 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/Floor/Gargabe01"]
+
+[node name="Gargabe02" type="Area2D" parent="YSort/Floor"]
+position = Vector2( 119, 195 )
+script = ExtResource( 19 )
+id = "garbage"
+consume_items = false
+interaction_sound = ExtResource( 27 )
+prompt = "Press Enter to pick up garbage"
+failed_prompt = "You already have a garbage."
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe02"]
+self_modulate = Color( 0.988235, 0.670588, 1, 1 )
+position = Vector2( -4, -7 )
+rotation = 2.52724
+texture = ExtResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Floor/Gargabe02"]
+position = Vector2( -4, -8.5 )
+shape = SubResource( 18 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/Floor/Gargabe02"]
+
+[node name="Gargabe03" type="Area2D" parent="YSort/Floor"]
+position = Vector2( 64, 275 )
+script = ExtResource( 19 )
+id = "garbage"
+consume_items = false
+interaction_sound = ExtResource( 27 )
+prompt = "Press Enter to pick up garbage"
+failed_prompt = "You already have a garbage."
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe03"]
+self_modulate = Color( 0.905882, 1, 0.647059, 1 )
+position = Vector2( -4, -7 )
+rotation = -0.141372
+texture = ExtResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Floor/Gargabe03"]
+position = Vector2( -4, -8.5 )
+shape = SubResource( 18 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/Floor/Gargabe03"]
+
+[node name="Gargabe04" type="Area2D" parent="YSort/Floor"]
+position = Vector2( -65, 261 )
+script = ExtResource( 19 )
+id = "garbage"
+consume_items = false
+interaction_sound = ExtResource( 27 )
+prompt = "Press Enter to pick up garbage"
+failed_prompt = "You already have a garbage."
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe04"]
+self_modulate = Color( 1, 0.25098, 0.972549, 1 )
+position = Vector2( -4, -7 )
+rotation = 0.883137
+texture = ExtResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Floor/Gargabe04"]
+position = Vector2( -4, -8.5 )
+shape = SubResource( 18 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/Floor/Gargabe04"]
+
 [node name="TileMap" type="TileMap" parent="YSort"]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 format = 1
-tile_data = PoolIntArray( -65533, 12, 0, -65532, 38, 0, 65532, 44, 0, 65533, 2, 0, 65534, 2, 0, 65535, 4, 0, 0, 0, 0, 1, 2, 0, 2, 4, 0, 3, 8, 0, 4, 13, 0, 5, 0, 0, 6, 2, 0, 7, 12, 0, 131068, 46, 0, 131069, 3, 0, 131070, 3, 0, 131071, 5, 0, 65536, 1, 0, 65537, 3, 0, 65538, 5, 0, 65539, 9, 0, 65540, 31, 0, 65541, 1, 0, 65542, 3, 0, 65543, 32, 0, 196604, 33, 0, 131079, 32, 0, 262140, 33, 0, 262143, 38, 0, 196615, 32, 0, 327676, 42, 0, 327677, 15, 0, 327678, 15, 0, 327679, 43, 0, 262144, 14, 0, 262145, 15, 0, 262146, 23, 0, 262151, 32, 0, 393213, 44, 0, 393214, 2, 0, 393215, 45, 0, 327680, 44, 0, 327681, 2, 0, 327682, 45, 0, 327687, 32, 0, 458749, 46, 0, 458750, 3, 0, 458751, 47, 0, 393216, 46, 0, 393217, 3, 0, 393218, 47, 0, 393223, 32, 0, 524285, 32, 0, 458759, 32, 0, 589821, 40, 0, 589822, 15, 0, 589823, 15, 0, 524288, 15, 0, 524289, 15, 0, 524290, 15, 0, 524291, 23, 0, 524295, 32, 0, 589826, 44, 0, 589827, 2, 0, 589831, 0, 0, 589832, 2, 0, 589833, 45, 0, 655362, 46, 0, 655363, 3, 0, 655367, 1, 0, 655368, 3, 0, 655369, 47, 0, 720898, 32, 0, 720905, 37, 0, 786434, 32, 0, 786441, 37, 0, 851970, 32, 0, 851977, 37, 0, 917506, 40, 0, 917507, 15, 0, 917508, 15, 0, 917509, 15, 0, 917510, 15, 0, 917511, 15, 0, 917512, 15, 0, 917513, 43, 0 )
+tile_data = PoolIntArray( 65532, 44, 0, 65533, 2, 0, 65534, 2, 0, 65535, 4, 0, 0, 0, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 12, 0, 131068, 46, 0, 131069, 3, 0, 131070, 3, 0, 131071, 5, 0, 65536, 1, 0, 65537, 3, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 65542, 3, 0, 65543, 32, 0, 196604, 33, 0, 131079, 32, 0, 262140, 33, 0, 262143, 38, 0, 196615, 32, 0, 327676, 42, 0, 327677, 15, 0, 327678, 15, 0, 327679, 43, 0, 262144, 14, 0, 262145, 15, 0, 262146, 23, 0, 262151, 32, 0, 393213, 44, 0, 393214, 2, 0, 393215, 45, 0, 327680, 44, 0, 327681, 2, 0, 327682, 45, 0, 327687, 32, 0, 458749, 46, 0, 458750, 3, 0, 458751, 47, 0, 393216, 46, 0, 393217, 3, 0, 393218, 47, 0, 393223, 32, 0, 524285, 32, 0, 458759, 32, 0, 589821, 40, 0, 589822, 15, 0, 589823, 15, 0, 524288, 15, 0, 524289, 15, 0, 524290, 15, 0, 524291, 23, 0, 524295, 32, 0, 589826, 44, 0, 589827, 2, 0, 589831, 0, 0, 589832, 2, 0, 589833, 45, 0, 655362, 46, 0, 655363, 3, 0, 655367, 1, 0, 655368, 3, 0, 655369, 47, 0, 720898, 32, 0, 720905, 37, 0, 786434, 32, 0, 786441, 37, 0, 851970, 32, 0, 851977, 37, 0, 917506, 40, 0, 917507, 15, 0, 917508, 15, 0, 917509, 15, 0, 917510, 15, 0, 917511, 15, 0, 917512, 15, 0, 917513, 43, 0 )
 
 [node name="SprHouseToiletPaper" type="Sprite" parent="YSort/TileMap"]
 position = Vector2( -55, 190 )
@@ -111,6 +712,74 @@ may_interact = false
 canvas_path = NodePath("../../../../CanvasLayer")
 panel_scene = ExtResource( 3 )
 
+[node name="ElectricParticles" type="CPUParticles2D" parent="YSort/TileMap/ElectricPanel"]
+position = Vector2( 0, -3 )
+rotation = 1.41863
+emitting = false
+amount = 12
+lifetime = 0.4
+one_shot = true
+emission_shape = 1
+emission_sphere_radius = 6.97
+spread = 47.45
+gravity = Vector2( 0, 45 )
+initial_velocity = 50.0
+angular_velocity = -418.91
+linear_accel = 22.73
+radial_accel = 4.15
+damping = 19.55
+color = Color( 1, 0.996078, 0.898039, 0.639216 )
+
+[node name="SprHouseEntranceDoor" type="Sprite" parent="YSort/TileMap"]
+position = Vector2( 117, 29 )
+texture = ExtResource( 25 )
+
+[node name="GlassCleaner" type="Area2D" parent="YSort"]
+position = Vector2( 23, 209 )
+script = ExtResource( 19 )
+id = "glass_cleaner"
+consume_items = false
+interaction_sound = ExtResource( 30 )
+prompt = "Press Enter to pick up glass cleaner"
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/GlassCleaner"]
+texture = ExtResource( 22 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/GlassCleaner"]
+position = Vector2( -0.5, -0.5 )
+shape = SubResource( 9 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/GlassCleaner"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSort/GlassCleaner"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/GlassCleaner/StaticBody2D"]
+position = Vector2( -0.5, -13.5 )
+shape = SubResource( 10 )
+
+[node name="Mop" type="Area2D" parent="YSort"]
+position = Vector2( 79, 200 )
+script = ExtResource( 19 )
+id = "mop"
+consume_items = false
+interaction_sound = ExtResource( 31 )
+prompt = "Press Enter to grab mop"
+
+[node name="SprObjectRag" type="Sprite" parent="YSort/Mop"]
+texture = ExtResource( 24 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Mop"]
+position = Vector2( 1, -12.5 )
+shape = SubResource( 12 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="YSort/Mop"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSort/Mop"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Mop/StaticBody2D"]
+position = Vector2( -0.5, -13.5 )
+shape = SubResource( 10 )
+
 [node name="KitchenFridge" type="StaticBody2D" parent="YSort"]
 position = Vector2( -109, 36 )
 
@@ -121,6 +790,13 @@ texture = ExtResource( 5 )
 position = Vector2( 5, -15 )
 shape = SubResource( 1 )
 
+[node name="SprHouseDirt32x" type="Sprite" parent="YSort/KitchenFridge"]
+self_modulate = Color( 1, 1, 1, 0.494118 )
+position = Vector2( 5, 7 )
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 64.9017, 8.52409, 24.7464, 44.4135 )
+
 [node name="KitchenCabinets" type="StaticBody2D" parent="YSort"]
 position = Vector2( -79, 35 )
 
@@ -128,6 +804,61 @@ position = Vector2( -79, 35 )
 position = Vector2( 30, 10 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 10 )
+
+[node name="Dirt_Cabinet_01" type="Sprite" parent="YSort/KitchenCabinets"]
+position = Vector2( 5, 5.37499 )
+scale = Vector2( 0.964284, 0.648437 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 32.084, 8.75495, 25.3957, 15.8553 )
+
+[node name="Dirt_Cabinet_02" type="Sprite" parent="YSort/KitchenCabinets"]
+position = Vector2( 31, 5.37499 )
+scale = Vector2( 0.964284, 0.648437 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 34.2027, 44.2768, 23.9738, 14.7531 )
+
+[node name="Dirt_Cabinet_03" type="Sprite" parent="YSort/KitchenCabinets"]
+position = Vector2( 55, 5.37499 )
+rotation = 3.14159
+scale = Vector2( 0.964, -0.648 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 34.2027, 44.2768, 23.9738, 14.7531 )
+
+[node name="Water_Cabinet_01" type="Sprite" parent="YSort/KitchenCabinets"]
+self_modulate = Color( 1, 1, 1, 0.505882 )
+position = Vector2( 56.0651, 17.375 )
+rotation = 3.14159
+scale = Vector2( 0.817162, -0.648 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 70.1465, 66.7972, 26.0489, 16.7832 )
+
+[node name="Water_Cabinet_02" type="Sprite" parent="YSort/KitchenCabinets"]
+self_modulate = Color( 1, 1, 1, 0.505882 )
+position = Vector2( 28.0651, 17.375 )
+rotation = 3.14159
+scale = Vector2( 0.817162, -0.648 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 66.4751, 65.5734, 13.6363, 17.4825 )
+
+[node name="Water_Cabinet_03" type="Sprite" parent="YSort/KitchenCabinets"]
+self_modulate = Color( 1, 1, 1, 0.505882 )
+position = Vector2( 4.06509, 17.375 )
+rotation = 3.14159
+scale = Vector2( 0.817162, -0.648 )
+z_as_relative = false
+texture = ExtResource( 20 )
+region_enabled = true
+region_rect = Rect2( 66.4751, 79.2806, 23.0426, 17.5026 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenCabinets"]
 position = Vector2( 30, -3 )
@@ -157,13 +888,15 @@ shape = SubResource( 5 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 4 )]
 unique_name_in_owner = true
-position = Vector2( 72, 86 )
+position = Vector2( 92, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
-position = Vector2( -7, 23 )
 current = true
 zoom = Vector2( 0.35, 0.35 )
-limit_left = 0
+limit_left = 19
+limit_top = 15
+limit_right = 526
+limit_bottom = 549
 limit_smoothed = true
 smoothing_enabled = true
 
@@ -174,11 +907,6 @@ scale = Vector2( 0.8, 0.8 )
 [node name="SprHouseBedsideTable" type="Sprite" parent="YSort/BedroomBedsideTable01"]
 position = Vector2( -7.75003, 7.49998 )
 texture = ExtResource( 15 )
-
-[node name="SprHouseBedsideLamp" type="Sprite" parent="YSort/BedroomBedsideTable01/SprHouseBedsideTable"]
-position = Vector2( 3, -19 )
-z_index = 1
-texture = ExtResource( 14 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BedroomBedsideTable01"]
 position = Vector2( -2.75005, -8.75002 )
@@ -212,12 +940,89 @@ texture = ExtResource( 16 )
 position = Vector2( -1.5, -15.5 )
 shape = SubResource( 7 )
 
+[node name="StartCoutndown" type="Node" parent="."]
+script = ExtResource( 23 )
+max_count = 1
+
+[node name="PanicSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 32 )
+volume_db = 0.3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/panic = SubResource( 20 )
+anims/stop_panic = SubResource( 21 )
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="."]
+anims/GameOver = SubResource( 22 )
+
+[connection signal="timeout" from="Timer" to="CanvasLayer/HUD" method="show_hint" binds= [ "Go and fix electrical panel!", 0.0 ]]
 [connection signal="timeout" from="Timer" to="DeathTimer" method="start" binds= [ 5.0 ]]
 [connection signal="timeout" from="Timer" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", true ]]
+[connection signal="timeout" from="Timer" to="PanicSound" method="play" binds= [ 0.0 ]]
+[connection signal="timeout" from="Timer" to="AnimationPlayer" method="play" binds= [ "panic" ]]
+[connection signal="timeout" from="DeathTimer" to="CutscenePlayer" method="play" flags=6 binds= [ "GameOver" ]]
+[connection signal="gate_opened" from="Tasks" to="YSort/Player" method="disable_input"]
+[connection signal="interacted_no_args" from="Tasks/ClearFridge" to="Tasks" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearFridge" to="Tasks/ClearFridge" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearFridge" to="YSort/KitchenFridge/SprHouseDirt32x" method="free"]
+[connection signal="gate_opened" from="Tasks/ClearKitchenTables/Gate" to="Tasks" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/ClearTable" to="Tasks/ClearKitchenTables/Gate" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/ClearTable" to="Tasks/ClearKitchenTables/Dirt_Table" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/ClearTable" to="Tasks/ClearKitchenTables/ClearTable" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01/CollisionShape2D" method="set" binds= [ "disabled", true ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01/CollisionShape2D" method="set" binds= [ "disabled", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01" to="YSort/KitchenCabinets/Dirt_Cabinet_03" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01" to="Tasks/ClearKitchenTables/Gate" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01" to="YSort/KitchenCabinets/Water_Cabinet_01" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02/CollisionShape2D" method="set" binds= [ "disabled", true ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02/CollisionShape2D" method="set" binds= [ "disabled", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02" to="YSort/KitchenCabinets/Dirt_Cabinet_02" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02" to="Tasks/ClearKitchenTables/Gate" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02" to="YSort/KitchenCabinets/Water_Cabinet_02" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03/CollisionShape2D" method="set" binds= [ "disabled", true ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03/CollisionShape2D" method="set" binds= [ "disabled", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03" to="YSort/KitchenCabinets/Dirt_Cabinet_01" method="free"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03" to="Tasks/ClearKitchenTables/Gate" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03" to="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03" to="YSort/KitchenCabinets/Water_Cabinet_03" method="free"]
+[connection signal="picked_up" from="Tasks/Rag" to="StartCoutndown" method="activate"]
+[connection signal="gate_opened" from="Tasks/WashFloor" to="Tasks" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor06" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor06" to="Tasks/WashFloor/WashFloor06" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor06" to="YSort/Floor/Dirt06" method="free"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor03" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor03" to="Tasks/WashFloor/WashFloor03" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor03" to="YSort/Floor/Dirt03" method="free"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor04" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor04" to="Tasks/WashFloor/WashFloor04" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor04" to="YSort/Floor/Dirt04" method="free"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor05" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor05" to="Tasks/WashFloor/WashFloor05" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor05" to="YSort/Floor/Dirt05" method="free"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor01" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor01" to="Tasks/WashFloor/WashFloor01" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor01" to="YSort/Floor/Dirt01" method="free"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor02" to="Tasks/WashFloor" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor02" to="Tasks/WashFloor/WashFloor02" method="set" binds= [ "may_interact", false ]]
+[connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor02" to="YSort/Floor/Dirt02" method="free"]
+[connection signal="gate_opened" from="Tasks/GrabGarbage" to="Tasks" method="add_number"]
+[connection signal="interacted_no_args" from="Tasks/GrabGarbage/Trash" to="Tasks/GrabGarbage" method="add_number"]
+[connection signal="picked_up" from="YSort/Floor/Gargabe01" to="StartCoutndown" method="activate"]
+[connection signal="picked_up" from="YSort/Floor/Gargabe02" to="StartCoutndown" method="activate"]
+[connection signal="picked_up" from="YSort/Floor/Gargabe03" to="StartCoutndown" method="activate"]
+[connection signal="picked_up" from="YSort/Floor/Gargabe04" to="StartCoutndown" method="activate"]
 [connection signal="hidden" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/Player" method="enable_input"]
 [connection signal="showed" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/Player" method="disable_input"]
-[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="DeathTimer" method="stop"]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="Timer" method="start" binds= [ 10.0 ]]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="CanvasLayer/HUD" method="hide_hint"]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="DeathTimer" method="stop"]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", false ]]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="PanicSound" method="stop"]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="AnimationPlayer" method="play" binds= [ "stop_panic" ]]
+[connection signal="picked_up" from="YSort/GlassCleaner" to="StartCoutndown" method="activate"]
+[connection signal="picked_up" from="YSort/Mop" to="StartCoutndown" method="activate"]
+[connection signal="activated" from="StartCoutndown" to="Timer" method="start" binds= [ 10.0 ]]
 
 [editable path="YSort/TileMap/ElectricPanel"]

@@ -1,6 +1,9 @@
 #include "ep_player.hpp"
 #include <Input.hpp>
 #include <AnimationPlayer.hpp>
+#include <CanvasLayer.hpp>
+#include <Popup.hpp>
+#include <ResourceLoader.hpp>
 
 using namespace godot;
 
@@ -132,13 +135,29 @@ void Player::add_items_to_inventory(Array items) {
 
 void Player::remove_items_from_inventory(Array items) {
     for(int i = 0; i < items.size(); i++) {
-        if(inventory.has(items[i])) inventory.remove(i);
+        if(inventory.has(items[i])) inventory.remove(inventory.find(items[i]));
     }
 }
 
-bool Player::inventory_has_items(Array items) {
+bool Player::inventory_has_items(Array items, bool exclusive) {
     for(int i = 0; i < items.size(); i++) {
+        if(exclusive)
+            if(inventory.has(items[i])) return true;
+        
         if(!inventory.has(items[i])) return false;
     }
     return true;
+}
+
+void Player::game_over() {
+    disable_input();
+    CanvasLayer* canvas = CanvasLayer::_new();
+    canvas->set_name("GameOverCanvas");
+    canvas->set_layer(999);
+    add_child(canvas);
+
+    Popup* game_over = Object::cast_to<Popup>(game_over_scene->instance());
+    if(!game_over) return;
+    canvas->add_child(game_over);
+    game_over->popup();
 }

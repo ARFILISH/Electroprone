@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_electric_panel_show.ogg-ceeb36ad46c07476f13b1035c089badf.oggstr"
+
+[deps]
+
+source_file="res://sound/hud/snd_electric_panel_show.ogg"
+dest_files=[ "res://.import/snd_electric_panel_show.ogg-ceeb36ad46c07476f13b1035c089badf.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

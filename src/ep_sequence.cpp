@@ -19,7 +19,6 @@ void Sequence::set_number(int num_to_set) {
     if(num_to_set == current_number) return;
     
     current_number = num_to_set;
-    Godot::print(get_name() + ": current number is " + String::num_int64(current_number));
     String signal_name = "sequence_" + String::num_int64(current_number);
     emit_signal(signal_name);
 }

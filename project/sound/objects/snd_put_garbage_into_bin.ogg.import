@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_put_garbage_into_bin.ogg-a00dde0f5548263e111556b719e4f307.oggstr"
+
+[deps]
+
+source_file="res://sound/objects/snd_put_garbage_into_bin.ogg"
+dest_files=[ "res://.import/snd_put_garbage_into_bin.ogg-a00dde0f5548263e111556b719e4f307.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

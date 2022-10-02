@@ -4,6 +4,7 @@
 #include <Godot.hpp>
 #include <KinematicBody2D.hpp>
 #include <RayCast2D.hpp>
+#include <PackedScene.hpp>
 #include "ep_interactable.hpp"
 
 namespace godot {
@@ -27,6 +28,7 @@ public:
     float walk_speed = 200.f;
     float run_speed = 450.f;
     float interaction_distance = 50.f;
+    Ref<PackedScene> game_over_scene;
 
 protected:
     bool is_running = false;
@@ -58,12 +60,15 @@ public:
         register_method("inventory_has_items", &Player::inventory_has_items);
         register_method("inventory_has_items", &Player::inventory_has_items);
         register_method("get_prompt", &Player::get_prompt);
+        register_method("game_over", &Player::game_over);
         register_property<Player, bool>("input_enabled", &Player::input_enabled, true);
         register_property<Player, float>("walk_speed", &Player::walk_speed, 200.f);
         register_property<Player, float>("run_speed", &Player::run_speed, 450.f);
         register_property<Player, float>("interaction_distance", &Player::interaction_distance, 50.f);
+        register_property<Player, Ref<PackedScene>>("game_over_scene", &Player::game_over_scene, Ref<PackedScene>(), 
+            GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_DEFAULT, GODOT_PROPERTY_HINT_RESOURCE_TYPE, "PackedScene");
         register_property<Player, int>("move_dir", &Player::move_dir, MOVE_DIRECTION::FORWARD, 
-            GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_DEFAULT,GODOT_PROPERTY_HINT_ENUM, 
+            GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_DEFAULT, GODOT_PROPERTY_HINT_ENUM, 
             "Forward, Backward, Right, Left, Forward right, Forward left, Backward right, Backward left");
         register_property<Player, Array>("inventory", &Player::inventory, {});
     }
@@ -77,8 +82,9 @@ public:
     bool add_item_to_inventory(String item);
     void add_items_to_inventory(Array items);
     void remove_items_from_inventory(Array items);
-    bool inventory_has_items(Array items);
+    bool inventory_has_items(Array items, bool exclusive = false);
     String get_prompt() const { if(!current_interactable || !input_enabled) return ""; return current_interactable->get_prompt((Player*)this); };
+    void game_over();
 
 protected:
     void _ready();

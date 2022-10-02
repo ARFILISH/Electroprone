@@ -10,6 +10,8 @@
 #include "ep_bool_gate.hpp"
 #include "ep_electric_panel.hpp"
 #include "ep_panel_node.hpp"
+#include "ep_range_gate.hpp"
+#include "ep_count_event.hpp"
 
 using namespace godot;
 
@@ -34,4 +36,6 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
     register_class<BoolGate>();
     register_class<ElectricPanel>();
     register_class<PanelNode>();
+    register_class<RangeGate>();
+    register_class<CountEvent>();
 }

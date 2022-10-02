@@ -14,12 +14,12 @@ theme = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="ElectricProgressBar" type="TextureProgress" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -260.0
+anchor_right = 1.0
+anchor_bottom = 0.058
+margin_left = 380.0
 margin_top = 10.0
-margin_right = 260.0
-margin_bottom = 42.0
+margin_right = -380.0
+margin_bottom = 0.239998
 max_value = 10.0
 step = 0.01
 texture_under = ExtResource( 2 )
@@ -44,14 +44,31 @@ align = 1
 valign = 1
 
 [node name="PromptLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -73.0
+margin_bottom = -41.0
+text = "Interaction text"
+align = 1
+valign = 1
+
+[node name="HintLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -197.5
-margin_top = -51.0
-margin_right = 197.5
-margin_bottom = -19.0
-text = "Interaction text"
+margin_left = -640.0
+margin_top = -144.0
+margin_right = 640.0
+margin_bottom = -112.0
+custom_colors/font_color = Color( 1, 0.776471, 0.976471, 1 )
+text = "Hint"
 align = 1
 valign = 1
+
+[node name="HideTimer" type="Timer" parent="HintLabel"]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="timeout" from="HintLabel/HideTimer" to="." method="hide_hint"]

@@ -19,15 +19,19 @@ void Gate::set_number(int num_to_set) {
     num_to_set = Math::clamp(num_to_set, 0, needed_number);
     if(num_to_set == current_number) return;
     const int last_set_number = current_number;
-
+    
     current_number = num_to_set;
+
+    Godot::print(get_name() + ": number set to " + String::num_int64(current_number));
+
     if(last_set_number == needed_number && current_number < needed_number) {
         emit_signal("gate_closed");
+        Godot::print(get_name() + ": gate was closed");
         return;
     }
     if(last_set_number < needed_number && current_number >= needed_number) {
         emit_signal("gate_opened");
+        Godot::print(get_name() + ": gate was opened");
         return;
     }
-    Godot::print(get_name() + ": current number is " + String::num_int64(current_number));
 }
