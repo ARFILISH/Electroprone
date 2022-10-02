@@ -3,6 +3,7 @@
 
 #include <Godot.hpp>
 #include <Area2D.hpp>
+#include <AudioStream.hpp>
 
 namespace godot {
 
@@ -14,6 +15,8 @@ public:
     Array needed_items {};
     bool consume_items = true;
     bool may_interact = true;
+    Ref<AudioStream> interaction_sound;
+
 protected:
     int max_interacts = 0;
     String prompt = "Press Enter to interact";
@@ -35,6 +38,8 @@ public:
         register_property<Interactable, bool>("consume_items", &Interactable::consume_items, true);
         register_property<Interactable, bool>("may_interact", &Interactable::may_interact, true);
         register_property<Interactable, int>("max_interacts", &Interactable::max_interacts, 0);
+        register_property<Interactable, Ref<AudioStream>>("interaction_sound", &Interactable::interaction_sound, Ref<AudioStream>(), 
+            GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_DEFAULT, GODOT_PROPERTY_HINT_RESOURCE_TYPE, "AudioStream");
         register_property<Interactable, String>("prompt", &Interactable::prompt, "Press Enter to interact");
         register_property<Interactable, String>("failed_prompt", &Interactable::failed_prompt, "");
         register_signal<Interactable>("interacted", GODOT_VARIANT_TYPE_INT, "_count_interacted");

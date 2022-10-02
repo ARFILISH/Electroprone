@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/player/player.gdns" type="Script" id=1]
 [ext_resource path="res://sprites/player/spr_player.png" type="Texture" id=2]
+[ext_resource path="res://sound/player/snd_player_footstep.ogg" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13, 16 )
+extents = Vector2( 11, 16 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle_backward"
@@ -342,14 +343,15 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="AudioStreamRandomPitch" id=7]
+[sub_resource type="AudioStreamRandomPitch" id=15]
+audio_stream = ExtResource( 3 )
+random_pitch = 1.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
-walk_speed = 80.0
-run_speed = 192.0
-interaction_distance = 6.0
-move_dir = 1
+walk_speed = 100.0
+run_speed = 170.0
+interaction_distance = 40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -381,4 +383,7 @@ anims/walk_left = SubResource( 12 )
 anims/walk_right = SubResource( 14 )
 
 [node name="FootstepPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = SubResource( 7 )
+stream = SubResource( 15 )
+volume_db = 0.05
+pitch_scale = 0.6
+max_distance = 50.0

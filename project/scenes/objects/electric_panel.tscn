@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/gameplay/interactable.gdns" type="Script" id=1]
+[ext_resource path="res://sprites/gameplay/spr_object_electric_panel.png" type="Texture" id=2]
+[ext_resource path="res://scripts/level/panel_node.gdns" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 12 )
+
+[node name="ElectricPanel" type="Area2D"]
+script = ExtResource( 1 )
+prompt = "Press Enter to fix electrical panel"
+
+[node name="SprObjectElectricPanel" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1 )
+shape = SubResource( 1 )
+
+[node name="PanelNode" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="interacted_no_args" from="." to="PanelNode" method="show"]

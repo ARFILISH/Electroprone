@@ -28,12 +28,12 @@ color = Color( 0.121569, 0.121569, 0.121569, 1 )
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="CloseTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="MainGate" type="Node" parent="."]
 script = ExtResource( 2 )
 needed_number = 2
-
-[node name="CloseTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="CheckButton2" type="CheckButton" parent="."]
 margin_left = 24.096
@@ -62,6 +62,8 @@ enabled_focus_mode = 0
 [node name="Bool" type="Node" parent="CheckButton"]
 script = ExtResource( 3 )
 opened = true
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="toggled" from="CheckButton2" to="CheckButton2/Bool" method="set_opened"]
 [connection signal="gate_closed" from="CheckButton2/Bool" to="MainGate" method="subtract_number"]

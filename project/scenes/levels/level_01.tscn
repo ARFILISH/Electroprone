@@ -1,0 +1,223 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://scenes/objects/electric_panel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/house/tileset_house_base.tres" type="TileSet" id=2]
+[ext_resource path="res://scenes/levels/level_01_panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/objects/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sprites/house/spr_house_kitchen_fridge.png" type="Texture" id=5]
+[ext_resource path="res://sprites/house/spr_house_sink.png" type="Texture" id=6]
+[ext_resource path="res://sprites/house/spr_house_toilet.png" type="Texture" id=7]
+[ext_resource path="res://sprites/house/spr_house_toilet_paper.png" type="Texture" id=8]
+[ext_resource path="res://sprites/house/spr_house_kitchen_table.png" type="Texture" id=9]
+[ext_resource path="res://sprites/house/spr_house_kitchen_cabinet.png" type="Texture" id=10]
+[ext_resource path="res://sprites/house/spr_house_trash.png" type="Texture" id=11]
+[ext_resource path="res://scenes/objects/hud.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scripts/level/electric_timer.gdns" type="Script" id=13]
+[ext_resource path="res://sprites/house/spr_house_bedside_lamp.png" type="Texture" id=14]
+[ext_resource path="res://sprites/house/spr_house_bedside_table..png" type="Texture" id=15]
+[ext_resource path="res://sprites/house/spr_house_bed.png" type="Texture" id=16]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9.5, 4 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 14 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 38, 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 22.5, 5.5 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 5.5, 4 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 13.75, 6.25 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 23.5, 26.5 )
+
+[node name="Level01" type="Node2D"]
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+script = ExtResource( 13 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 12 )]
+timer_path = NodePath("../../Timer")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -603.0
+margin_top = -324.0
+margin_right = 1554.0
+margin_bottom = 981.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="YSort" type="YSort" parent="."]
+position = Vector2( 167, 53 )
+
+[node name="Floor" type="TileMap" parent="YSort"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+cell_quadrant_size = 32
+format = 1
+tile_data = PoolIntArray( 3, 28, 0, 4, 28, 0, 131068, 28, 0, 131069, 28, 0, 131070, 28, 0, 131071, 28, 0, 65536, 28, 0, 65537, 28, 0, 65538, 28, 0, 65539, 28, 0, 65540, 28, 0, 65541, 28, 0, 65542, 28, 0, 196604, 28, 0, 196605, 28, 0, 196606, 28, 0, 196607, 28, 0, 131072, 28, 0, 131073, 28, 0, 131074, 28, 0, 131075, 28, 0, 131076, 28, 0, 131077, 28, 0, 131078, 28, 0, 262140, 28, 0, 262141, 28, 0, 262142, 28, 0, 262143, 28, 0, 196608, 28, 0, 196609, 28, 0, 196610, 28, 0, 196611, 28, 0, 196612, 28, 0, 196613, 28, 0, 196614, 28, 0, 327676, 28, 0, 327677, 28, 0, 327678, 28, 0, 327679, 28, 0, 262144, 28, 0, 262145, 28, 0, 262146, 28, 0, 262147, 28, 0, 262148, 28, 0, 262149, 28, 0, 262150, 28, 0, 327680, 28, 0, 327681, 28, 0, 327682, 28, 0, 327683, 28, 0, 327684, 28, 0, 327685, 28, 0, 327686, 28, 0, 458749, 28, 0, 458750, 28, 0, 458751, 28, 0, 393216, 28, 0, 393217, 28, 0, 393218, 28, 0, 393219, 28, 0, 393220, 28, 0, 393221, 28, 0, 393222, 28, 0, 524285, 28, 0, 524286, 28, 0, 524287, 28, 0, 458752, 28, 0, 458753, 28, 0, 458754, 28, 0, 458755, 28, 0, 458756, 28, 0, 458757, 28, 0, 458758, 28, 0, 589821, 28, 0, 589822, 28, 0, 589823, 28, 0, 524288, 28, 0, 524289, 28, 0, 524290, 28, 0, 524291, 28, 0, 524292, 28, 0, 524293, 28, 0, 524294, 28, 0, 589828, 28, 0, 589829, 28, 0, 589830, 28, 0, 655362, 28, 0, 655363, 28, 0, 655364, 28, 0, 655365, 28, 0, 655366, 28, 0, 655367, 28, 0, 655368, 28, 0, 655369, 28, 0, 720898, 28, 0, 720899, 28, 0, 720900, 28, 0, 720901, 28, 0, 720902, 28, 0, 720903, 28, 0, 720904, 28, 0, 720905, 28, 0, 786434, 28, 0, 786435, 28, 0, 786436, 28, 0, 786437, 28, 0, 786438, 28, 0, 786439, 28, 0, 786440, 28, 0, 786441, 28, 0, 851970, 28, 0, 851971, 28, 0, 851972, 28, 0, 851973, 28, 0, 851974, 28, 0, 851975, 28, 0, 851976, 28, 0, 851977, 28, 0, 917506, 28, 0, 917507, 28, 0, 917508, 28, 0, 917509, 28, 0, 917510, 28, 0, 917511, 28, 0, 917512, 28, 0, 917513, 28, 0 )
+
+[node name="TileMap" type="TileMap" parent="YSort"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+cell_quadrant_size = 32
+format = 1
+tile_data = PoolIntArray( -65533, 12, 0, -65532, 38, 0, 65532, 44, 0, 65533, 2, 0, 65534, 2, 0, 65535, 4, 0, 0, 0, 0, 1, 2, 0, 2, 4, 0, 3, 8, 0, 4, 13, 0, 5, 0, 0, 6, 2, 0, 7, 12, 0, 131068, 46, 0, 131069, 3, 0, 131070, 3, 0, 131071, 5, 0, 65536, 1, 0, 65537, 3, 0, 65538, 5, 0, 65539, 9, 0, 65540, 31, 0, 65541, 1, 0, 65542, 3, 0, 65543, 32, 0, 196604, 33, 0, 131079, 32, 0, 262140, 33, 0, 262143, 38, 0, 196615, 32, 0, 327676, 42, 0, 327677, 15, 0, 327678, 15, 0, 327679, 43, 0, 262144, 14, 0, 262145, 15, 0, 262146, 23, 0, 262151, 32, 0, 393213, 44, 0, 393214, 2, 0, 393215, 45, 0, 327680, 44, 0, 327681, 2, 0, 327682, 45, 0, 327687, 32, 0, 458749, 46, 0, 458750, 3, 0, 458751, 47, 0, 393216, 46, 0, 393217, 3, 0, 393218, 47, 0, 393223, 32, 0, 524285, 32, 0, 458759, 32, 0, 589821, 40, 0, 589822, 15, 0, 589823, 15, 0, 524288, 15, 0, 524289, 15, 0, 524290, 15, 0, 524291, 23, 0, 524295, 32, 0, 589826, 44, 0, 589827, 2, 0, 589831, 0, 0, 589832, 2, 0, 589833, 45, 0, 655362, 46, 0, 655363, 3, 0, 655367, 1, 0, 655368, 3, 0, 655369, 47, 0, 720898, 32, 0, 720905, 37, 0, 786434, 32, 0, 786441, 37, 0, 851970, 32, 0, 851977, 37, 0, 917506, 40, 0, 917507, 15, 0, 917508, 15, 0, 917509, 15, 0, 917510, 15, 0, 917511, 15, 0, 917512, 15, 0, 917513, 43, 0 )
+
+[node name="SprHouseToiletPaper" type="Sprite" parent="YSort/TileMap"]
+position = Vector2( -55, 190 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 8 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="YSort/TileMap"]
+position = Vector2( -74, 197 )
+
+[node name="SprHouseToilet" type="Sprite" parent="YSort/TileMap/StaticBody2D"]
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/TileMap/StaticBody2D"]
+position = Vector2( 1.5, -15 )
+shape = SubResource( 2 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="YSort/TileMap"]
+position = Vector2( -27, 190 )
+scale = Vector2( 0.8, 0.8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/TileMap/StaticBody2D2"]
+position = Vector2( 1.5, -15 )
+shape = SubResource( 2 )
+
+[node name="SprHouseSink" type="Sprite" parent="YSort/TileMap/StaticBody2D2"]
+texture = ExtResource( 6 )
+
+[node name="ElectricPanel" parent="YSort/TileMap" instance=ExtResource( 1 )]
+position = Vector2( 53, 28 )
+may_interact = false
+
+[node name="PanelNode" parent="YSort/TileMap/ElectricPanel" index="2"]
+canvas_path = NodePath("../../../../CanvasLayer")
+panel_scene = ExtResource( 3 )
+
+[node name="KitchenFridge" type="StaticBody2D" parent="YSort"]
+position = Vector2( -109, 36 )
+
+[node name="SprHouseBed" type="Sprite" parent="YSort/KitchenFridge"]
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenFridge"]
+position = Vector2( 5, -15 )
+shape = SubResource( 1 )
+
+[node name="KitchenCabinets" type="StaticBody2D" parent="YSort"]
+position = Vector2( -79, 35 )
+
+[node name="SprHouseBed" type="Sprite" parent="YSort/KitchenCabinets"]
+position = Vector2( 30, 10 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenCabinets"]
+position = Vector2( 30, -3 )
+shape = SubResource( 4 )
+
+[node name="KitchenTable" type="StaticBody2D" parent="YSort"]
+position = Vector2( -34, 140 )
+
+[node name="SprHouseBed" type="Sprite" parent="YSort/KitchenTable"]
+position = Vector2( 0, -3 )
+texture = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenTable"]
+position = Vector2( 4.5, -2.5 )
+shape = SubResource( 3 )
+
+[node name="KitchenTrash" type="StaticBody2D" parent="YSort"]
+position = Vector2( -115, 148 )
+
+[node name="SprHouseBed" type="Sprite" parent="YSort/KitchenTrash"]
+position = Vector2( 0, -3 )
+texture = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenTrash"]
+position = Vector2( 1.5, 3 )
+shape = SubResource( 5 )
+
+[node name="Player" parent="YSort" instance=ExtResource( 4 )]
+unique_name_in_owner = true
+position = Vector2( 72, 86 )
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
+position = Vector2( -7, 23 )
+current = true
+zoom = Vector2( 0.35, 0.35 )
+limit_left = 0
+limit_smoothed = true
+smoothing_enabled = true
+
+[node name="BedroomBedsideTable01" type="StaticBody2D" parent="YSort"]
+position = Vector2( 117.2, 331 )
+scale = Vector2( 0.8, 0.8 )
+
+[node name="SprHouseBedsideTable" type="Sprite" parent="YSort/BedroomBedsideTable01"]
+position = Vector2( -7.75003, 7.49998 )
+texture = ExtResource( 15 )
+
+[node name="SprHouseBedsideLamp" type="Sprite" parent="YSort/BedroomBedsideTable01/SprHouseBedsideTable"]
+position = Vector2( 3, -19 )
+z_index = 1
+texture = ExtResource( 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BedroomBedsideTable01"]
+position = Vector2( -2.75005, -8.75002 )
+shape = SubResource( 6 )
+
+[node name="BedroomBedsideTable02" type="StaticBody2D" parent="YSort"]
+position = Vector2( 243.2, 331 )
+scale = Vector2( 0.8, 0.8 )
+
+[node name="SprHouseBedsideTable" type="Sprite" parent="YSort/BedroomBedsideTable02"]
+position = Vector2( -7.75003, 7.49998 )
+texture = ExtResource( 15 )
+
+[node name="SprHouseBedsideLamp" type="Sprite" parent="YSort/BedroomBedsideTable02/SprHouseBedsideTable"]
+position = Vector2( 3, -19 )
+z_index = 1
+texture = ExtResource( 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BedroomBedsideTable02"]
+position = Vector2( -2.75005, -8.75002 )
+shape = SubResource( 6 )
+
+[node name="BedroomBed" type="StaticBody2D" parent="YSort"]
+position = Vector2( 288, 352 )
+
+[node name="SprHouseBed" type="Sprite" parent="YSort/BedroomBed"]
+position = Vector2( -7, 0 )
+texture = ExtResource( 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BedroomBed"]
+position = Vector2( -1.5, -15.5 )
+shape = SubResource( 7 )
+
+[connection signal="timeout" from="Timer" to="DeathTimer" method="start" binds= [ 5.0 ]]
+[connection signal="timeout" from="Timer" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", true ]]
+[connection signal="hidden" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/Player" method="enable_input"]
+[connection signal="showed" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/Player" method="disable_input"]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="DeathTimer" method="stop"]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="Timer" method="start" binds= [ 10.0 ]]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", false ]]
+
+[editable path="YSort/TileMap/ElectricPanel"]

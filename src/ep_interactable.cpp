@@ -22,7 +22,8 @@ void Interactable::interact(Node* interacted) {
         emit_signal("interacted", interaction_count);
         emit_signal("interacted_no_args");
         on_interacted(interacted);
-        if(!sound_player);
+        if(!sound_player) return;
+        sound_player->set_stream(interaction_sound);
         sound_player->play();
     }
 }

@@ -7,8 +7,8 @@
 
 namespace godot {
 
-class CanvasLayer;
 class ElectricPanel;
+class CanvasLayer;
 
 class PanelNode : public Node {
     GODOT_CLASS(PanelNode, Node);
@@ -17,8 +17,8 @@ public:
     Ref<PackedScene> panel_scene;
 
 private:
-    ElectricPanel* pnl;
     CanvasLayer* canvas;
+    ElectricPanel* pnl;
 
 
 public:

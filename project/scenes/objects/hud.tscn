@@ -1,23 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://sprites/hud/spr_hud_electricbar_pb.png" type="Texture" id=1]
 [ext_resource path="res://sprites/hud/spr_hud_electricbar_bg.png" type="Texture" id=2]
 [ext_resource path="res://scripts/player/hud.gdns" type="Script" id=3]
+[ext_resource path="res://data/themes/ui_theme.tres" type="Theme" id=4]
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
 margin_right = 1.0
+theme = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="ElectricProgressBar" type="TextureProgress" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -120.0
+margin_left = -260.0
 margin_top = 10.0
-margin_right = 120.0
-margin_bottom = 34.0
+margin_right = 260.0
+margin_bottom = 42.0
 max_value = 10.0
 step = 0.01
 texture_under = ExtResource( 2 )
@@ -33,10 +35,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -70.5
-margin_top = 3.0
-margin_right = 70.5
-margin_bottom = 17.0
+margin_left = -154.5
+margin_top = 13.0
+margin_right = 154.5
+margin_bottom = 45.0
 text = "10 seconds remaining"
 align = 1
 valign = 1
@@ -47,9 +49,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -197.5
-margin_top = -76.0
+margin_top = -51.0
 margin_right = 197.5
-margin_bottom = -62.0
+margin_bottom = -19.0
 text = "Interaction text"
 align = 1
 valign = 1
