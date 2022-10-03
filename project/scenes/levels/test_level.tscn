@@ -1,121 +1,42 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/objects/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/objects/electric_panel.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sprites/house/spr_house_bed.png" type="Texture" id=3]
-[ext_resource path="res://scripts/level/bool_gate.gdns" type="Script" id=4]
-[ext_resource path="res://scenes/objects/hud.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scripts/level/electric_timer.gdns" type="Script" id=6]
-[ext_resource path="res://scripts/level/panel_node.gdns" type="Script" id=7]
-[ext_resource path="res://scenes/levels/level_01_panel.tscn" type="PackedScene" id=8]
-[ext_resource path="res://sprites/house/tileset_house_base.tres" type="TileSet" id=9]
-[ext_resource path="res://sprites/house/spr_house_bedside_table..png" type="Texture" id=10]
-[ext_resource path="res://sprites/house/spr_house_bedside_lamp.png" type="Texture" id=11]
-[ext_resource path="res://sprites/house/spr_house_dirt_32x.png" type="Texture" id=12]
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 13.75, 6.25 )
+[ext_resource path="res://scenes/objects/game_over.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/gameplay/interactable.gdns" type="Script" id=2]
+[ext_resource path="res://sprites/gameplay/spr_object_electric_panel.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.5, 26.5 )
+extents = Vector2( 10, 12 )
 
 [node name="TestLevel" type="Node2D"]
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
 
-[node name="Node" type="Node" parent="."]
-script = ExtResource( 4 )
+[node name="YSort" type="YSort" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
-script = ExtResource( 6 )
+[node name="ElectricPanel" type="Area2D" parent="YSort"]
+script = ExtResource( 2 )
+consume_items = false
+prompt = "Press Enter to fix electrical panel"
+
+[node name="SprObjectElectricPanel" type="Sprite" parent="YSort/ElectricPanel"]
+texture = ExtResource( 3 )
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/ElectricPanel"]
+position = Vector2( 0, -1 )
+shape = SubResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource( 5 )]
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 0.0
+margin_top = 0.0
 margin_right = 0.0
-timer_path = NodePath("../../Timer")
+margin_bottom = 0.0
 
-[node name="Node2" type="Node" parent="."]
-script = ExtResource( 7 )
-canvas_path = NodePath("../CanvasLayer")
-panel_scene = ExtResource( 8 )
-
-[node name="YSort" type="YSort" parent="."]
-
-[node name="ElectricPanel" parent="YSort" instance=ExtResource( 2 )]
-may_interact = false
-
-[node name="PanelNode" parent="YSort/ElectricPanel" index="2"]
-canvas_path = NodePath("../../../CanvasLayer")
-panel_scene = ExtResource( 8 )
-
-[node name="BedroomBed" type="StaticBody2D" parent="YSort"]
-position = Vector2( 102.2, 37 )
-scale = Vector2( 0.8, 0.8 )
-
-[node name="SprHouseBedsideTable" type="Sprite" parent="YSort/BedroomBed"]
-position = Vector2( -7.75003, 7.49998 )
-texture = ExtResource( 10 )
-
-[node name="SprHouseBedsideLamp" type="Sprite" parent="YSort/BedroomBed/SprHouseBedsideTable"]
-position = Vector2( 3, -19 )
-z_index = 1
-texture = ExtResource( 11 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BedroomBed"]
-position = Vector2( -2.75005, -8.75002 )
-shape = SubResource( 2 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="YSort"]
-position = Vector2( 59, 60 )
-
-[node name="SprHouseBed" type="Sprite" parent="YSort/StaticBody2D"]
-position = Vector2( -7, 0 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/StaticBody2D"]
-position = Vector2( -1.5, -15.5 )
-shape = SubResource( 1 )
-
-[node name="TileMap" type="TileMap" parent="YSort"]
-tile_set = ExtResource( 9 )
-cell_size = Vector2( 32, 32 )
-cell_quadrant_size = 32
-cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
-cell_tile_origin = 2
-show_collision = true
-format = 1
-tile_data = PoolIntArray( -131068, 27, 0, -131067, 25, 0, -131066, 25, 0, -131065, 25, 0, -131064, 26, 0, -131063, 12, 0, -65527, 12, 0, 0, 21, 0, 1, 0, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 4, 0, 9, 8, 0, 65536, 19, 0, 65537, 1, 0, 65538, 3, 0, 65539, 3, 0, 65540, 3, 0, 65541, 3, 0, 65542, 3, 0, 65543, 3, 0, 65544, 5, 0, 65545, 9, 0, 131072, 19, 0, 131074, 28, 0, 131075, 28, 0, 131076, 28, 0, 131077, 28, 0, 196608, 19, 0, 196610, 28, 0, 196611, 28, 0, 196612, 28, 0, 196613, 28, 0, 196614, 28, 0, 196615, 28, 0, 262144, 19, 0, 262146, 28, 0, 262147, 28, 0, 262148, 28, 0, 262149, 28, 0, 262150, 28, 0, 262151, 28, 0, 262153, 28, 0, 262154, 28, 0, 262155, 28, 0, 262156, 28, 0, 327680, 19, 0, 327682, 28, 0, 327683, 28, 0, 327684, 28, 0, 327685, 28, 0, 327686, 28, 0, 327687, 28, 0, 327688, 28, 0, 327689, 28, 0, 327690, 28, 0, 327691, 28, 0, 327692, 28, 0, 327693, 28, 0, 393217, 28, 0, 393218, 28, 0, 393219, 28, 0, 393220, 28, 0, 393221, 28, 0, 393223, 28, 0, 393224, 28, 0, 393225, 28, 0, 393226, 28, 0, 393227, 28, 0, 393228, 28, 0, 393229, 28, 0, 458752, 28, 0, 458753, 28, 0, 458754, 28, 0, 458755, 28, 0, 458756, 28, 0, 458757, 28, 0, 458758, 28, 0, 458759, 28, 0, 458760, 28, 0, 458761, 28, 0, 458762, 28, 0, 458763, 28, 0, 458764, 28, 0, 458766, 28, 0, 524289, 15, 0, 524290, 20, 0, 524291, 20, 0, 524292, 28, 0, 524293, 28, 0, 524294, 28, 0, 524295, 19, 0, 524296, 28, 0, 524297, 28, 0, 524298, 28, 0, 524299, 28, 0, 524301, 28, 0, 589830, 28, 0, 589831, 28, 0, 589832, 28, 0, 589833, 28, 0, 589834, 28, 0, 589836, 28, 0, 655368, 28, 0, 655369, 28, 0, 655370, 28, 0, 655371, 28, 0 )
-
-[node name="SprHouseDirt32x" type="Sprite" parent="YSort/TileMap"]
-position = Vector2( 99.6, 33.9 )
-scale = Vector2( 0.65, 0.55625 )
-z_index = 1
-texture = ExtResource( 12 )
-hframes = 3
-vframes = 3
-frame = 1
-
-[node name="Player" parent="YSort" instance=ExtResource( 1 )]
-unique_name_in_owner = true
-position = Vector2( 448, 304 )
-inventory = [ "default_id" ]
-
-[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
-current = true
-process_mode = 0
-smoothing_enabled = true
-smoothing_speed = 10.0
-drag_margin_left = 0.0
-drag_margin_top = 0.0
-drag_margin_right = 0.0
-drag_margin_bottom = 0.0
-editor_draw_limits = true
-
-[connection signal="timeout" from="Timer" to="YSort/ElectricPanel" method="set" binds= [ "may_interact", true ]]
-
-[editable path="YSort/ElectricPanel"]
+[connection signal="ready" from="CanvasLayer" to="CanvasLayer/GameOver" method="popup"]

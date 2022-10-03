@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_finish.ogg-420f64d8eb195ca26103e1a6d3d91ccb.oggstr"
+
+[deps]
+
+source_file="res://sound/ambience/snd_finish.ogg"
+dest_files=[ "res://.import/snd_finish.ogg-420f64d8eb195ca26103e1a6d3d91ccb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

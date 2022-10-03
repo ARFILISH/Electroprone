@@ -156,7 +156,9 @@ void Player::game_over() {
     canvas->set_layer(999);
     add_child(canvas);
 
-    Popup* game_over = Object::cast_to<Popup>(game_over_scene->instance());
+    Node* game_over_node = game_over_scene->instance();
+    if(!game_over_node) return;
+    Popup* game_over = Object::cast_to<Popup>(game_over_node);
     if(!game_over) return;
     canvas->add_child(game_over);
     game_over->popup();

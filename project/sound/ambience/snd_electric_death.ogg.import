@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_electric_death.ogg-6e1e98fe1ee38b00cb181c7ec804e254.oggstr"
+
+[deps]
+
+source_file="res://sound/ambience/snd_electric_death.ogg"
+dest_files=[ "res://.import/snd_electric_death.ogg-6e1e98fe1ee38b00cb181c7ec804e254.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

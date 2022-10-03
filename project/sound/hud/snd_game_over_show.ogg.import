@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_game_over_show.ogg-5e5ae0f9b1f8a81b5e34fc62a7f92a19.oggstr"
+
+[deps]
+
+source_file="res://sound/hud/snd_game_over_show.ogg"
+dest_files=[ "res://.import/snd_game_over_show.ogg-5e5ae0f9b1f8a81b5e34fc62a7f92a19.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

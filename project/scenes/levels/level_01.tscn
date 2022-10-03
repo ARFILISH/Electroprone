@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://scenes/objects/electric_panel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/house/tileset_house_base.tres" type="TileSet" id=2]
@@ -32,6 +32,11 @@
 [ext_resource path="res://sound/objects/snd_pickup_glass_cleaner.ogg" type="AudioStream" id=30]
 [ext_resource path="res://sound/objects/snd_rag.ogg" type="AudioStream" id=31]
 [ext_resource path="res://sound/ambience/snd_electric_panic.ogg" type="AudioStream" id=32]
+[ext_resource path="res://sound/ambience/snd_electric_death.ogg" type="AudioStream" id=33]
+[ext_resource path="res://scripts/main_script.gd" type="Script" id=34]
+[ext_resource path="res://sprites/logo.png" type="Texture" id=35]
+[ext_resource path="res://data/themes/ui_theme.tres" type="Theme" id=36]
+[ext_resource path="res://sound/ambience/snd_finish.ogg" type="AudioStream" id=37]
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 12.5, 12.5 )
@@ -156,11 +161,14 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "disable_input"
+}, {
+"args": [  ],
+"method": "game_over"
 } ]
 }
 tracks/2/type = "method"
@@ -212,13 +220,238 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("CutscenePlayer/DeathSound")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 33 )
+} ],
+"times": PoolRealArray( 0.053 )
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("FadeLayer/ColorRect:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.6, 0.694, 0.699 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 0.772549, 0, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("FadeLayer:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "finish"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("YSort/Player:move_dir")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.02 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("CutscenePlayer/DeathSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 37 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("YSort/Player")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.01 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "disable_input"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ true ],
+"method": "stop"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.03, 5.6, 6.34 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("YSort/Player/Camera2D:zoom")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1, 4.38 ),
+"transitions": PoolRealArray( 0.15932, 1 ),
+"update": 0,
+"values": [ Vector2( 0.35, 0.35 ), Vector2( 0.15, 0.15 ) ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("DeathTimer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "stop"
+} ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("FadeLayer:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 6, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("FadeLayer/Control:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 6.4, 7.3, 8.7, 9.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath("MainScript")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "level_main_menu" ],
+"method": "change_level"
+} ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath("Timer")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "stop"
+} ]
 }
 
 [node name="Level01" type="Node2D"]
+
+[node name="FadeLayer" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="FadeLayer"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Control" type="Control" parent="FadeLayer"]
+modulate = Color( 1, 1, 1, 0.222222 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect2" type="TextureRect" parent="FadeLayer/Control"]
+anchor_left = 0.192
+anchor_right = 0.808
+anchor_bottom = 0.275
+margin_left = 0.23999
+margin_top = 90.0
+margin_right = -0.23999
+texture = ExtResource( 35 )
+expand = true
+
+[node name="Label" type="Label" parent="FadeLayer/Control"]
+anchor_left = 0.298
+anchor_top = 0.331
+anchor_right = 0.702
+anchor_bottom = 0.669
+margin_left = -0.440002
+margin_top = -0.320023
+margin_right = 0.439941
+margin_bottom = 0.319977
+theme = ExtResource( 36 )
+text = "Game by Arfilish
+For Ludum Dare 50"
+align = 1
+valign = 1
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
@@ -243,7 +476,7 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="Tasks" type="Node" parent="."]
 script = ExtResource( 17 )
-needed_number = 4
+needed_number = 5
 
 [node name="ClearFridge" type="Area2D" parent="Tasks"]
 position = Vector2( 61, 103 )
@@ -889,6 +1122,7 @@ shape = SubResource( 5 )
 [node name="Player" parent="YSort" instance=ExtResource( 4 )]
 unique_name_in_owner = true
 position = Vector2( 92, 56 )
+move_dir = 1
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true
@@ -954,14 +1188,23 @@ anims/stop_panic = SubResource( 21 )
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="."]
 anims/GameOver = SubResource( 22 )
+anims/finish = SubResource( 23 )
 
+[node name="DeathSound" type="AudioStreamPlayer" parent="CutscenePlayer"]
+stream = ExtResource( 37 )
+
+[node name="MainScript" type="Node" parent="."]
+script = ExtResource( 34 )
+
+[connection signal="ready" from="." to="Tasks" method="add_number"]
 [connection signal="timeout" from="Timer" to="CanvasLayer/HUD" method="show_hint" binds= [ "Go and fix electrical panel!", 0.0 ]]
 [connection signal="timeout" from="Timer" to="DeathTimer" method="start" binds= [ 5.0 ]]
+[connection signal="timeout" from="Timer" to="Tasks" method="subtract_number"]
 [connection signal="timeout" from="Timer" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", true ]]
 [connection signal="timeout" from="Timer" to="PanicSound" method="play" binds= [ 0.0 ]]
 [connection signal="timeout" from="Timer" to="AnimationPlayer" method="play" binds= [ "panic" ]]
 [connection signal="timeout" from="DeathTimer" to="CutscenePlayer" method="play" flags=6 binds= [ "GameOver" ]]
-[connection signal="gate_opened" from="Tasks" to="YSort/Player" method="disable_input"]
+[connection signal="gate_opened" from="Tasks" to="CutscenePlayer" method="play" flags=6 binds= [ "finish" ]]
 [connection signal="interacted_no_args" from="Tasks/ClearFridge" to="Tasks" method="add_number"]
 [connection signal="interacted_no_args" from="Tasks/ClearFridge" to="Tasks/ClearFridge" method="set" binds= [ "may_interact", false ]]
 [connection signal="interacted_no_args" from="Tasks/ClearFridge" to="YSort/KitchenFridge/SprHouseDirt32x" method="free"]
@@ -1018,6 +1261,7 @@ anims/GameOver = SubResource( 22 )
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="Timer" method="start" binds= [ 10.0 ]]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="CanvasLayer/HUD" method="hide_hint"]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="DeathTimer" method="stop"]
+[connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="Tasks" method="add_number"]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="YSort/TileMap/ElectricPanel" method="set" binds= [ "may_interact", false ]]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="PanicSound" method="stop"]
 [connection signal="solved" from="YSort/TileMap/ElectricPanel/PanelNode" to="AnimationPlayer" method="play" binds= [ "stop_panic" ]]

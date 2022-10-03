@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/snd_hud_button_hover.ogg-49522762d90e2d678c12cdea3fb74c28.oggstr"
+
+[deps]
+
+source_file="res://sound/hud/snd_hud_button_hover.ogg"
+dest_files=[ "res://.import/snd_hud_button_hover.ogg-49522762d90e2d678c12cdea3fb74c28.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

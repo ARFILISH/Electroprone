@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/player/player.gdns" type="Script" id=1]
 [ext_resource path="res://sprites/player/spr_player.png" type="Texture" id=2]
 [ext_resource path="res://sound/player/snd_player_footstep.ogg" type="AudioStream" id=3]
+[ext_resource path="res://scenes/objects/game_over.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 11, 16 )
@@ -352,6 +353,7 @@ script = ExtResource( 1 )
 walk_speed = 100.0
 run_speed = 170.0
 interaction_distance = 40.0
+game_over_scene = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
