@@ -9,12 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "",
 "class": "Gate",
 "language": "NativeScript",
 "path": "res://scripts/level/gate.gdns"
 }, {
-"base": "Node",
+"base": "",
 "class": "Sequence",
 "language": "NativeScript",
 "path": "res://scripts/level/sequence.gdns"

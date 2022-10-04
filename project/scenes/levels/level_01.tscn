@@ -486,7 +486,7 @@ consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 29 )
 prompt = "Press Enter to clear table"
-failed_prompt = "You need a glass cleaner to clear cupboard"
+failed_prompt = "You need a rag and glass cleaner to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearFridge"]
 position = Vector2( 2.5, -10.5 )
