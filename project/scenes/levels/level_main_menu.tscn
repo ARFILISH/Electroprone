@@ -101,7 +101,7 @@ text = "CONTROLS:
 
 WASD - Movement
 LShift - Run
-Enter - Interact"
+Space  - Interact"
 align = 1
 valign = 1
 

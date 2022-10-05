@@ -485,7 +485,7 @@ needed_items = [ "rag", "glass_cleaner" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 29 )
-prompt = "Press Enter to clear table"
+prompt = "Press Space to clear table"
 failed_prompt = "You need a rag and glass cleaner to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearFridge"]
@@ -514,8 +514,8 @@ needed_items = [ "rag" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to clear table"
-failed_prompt = "You need a rag to clear cupboard"
+prompt = "Press Space to clear table"
+failed_prompt = "You need a rag to clear table"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/ClearTable"]
 position = Vector2( 2.5, -1 )
@@ -532,7 +532,7 @@ needed_items = [ "rag" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a rag to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_01"]
@@ -548,7 +548,7 @@ needed_items = [ "rag", "glass_cleaner" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 29 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a glass cleaner to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_01"]
@@ -565,7 +565,7 @@ needed_items = [ "rag" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a rag to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_02"]
@@ -581,7 +581,7 @@ needed_items = [ "rag", "glass_cleaner" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 29 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a glass cleaner to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_02"]
@@ -598,7 +598,7 @@ needed_items = [ "rag" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a rag to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_03"]
@@ -614,7 +614,7 @@ needed_items = [ "rag", "glass_cleaner" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 29 )
-prompt = "Press Enter to clear cupboard"
+prompt = "Press Space to clear cupboard"
 failed_prompt = "You need a glass cleaner to clear cupboard"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/ClearKitchenTables/Cabinets/ClearCabinet_2_03"]
@@ -630,7 +630,7 @@ script = ExtResource( 19 )
 id = "rag"
 consume_items = false
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to pick up rag"
+prompt = "Press Space to pick up rag"
 
 [node name="SprObjectRag" type="Sprite" parent="Tasks/Rag"]
 texture = ExtResource( 21 )
@@ -652,7 +652,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor06"]
@@ -668,7 +668,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor03"]
@@ -684,7 +684,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor04"]
@@ -700,7 +700,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor05"]
@@ -716,7 +716,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor01"]
@@ -732,7 +732,7 @@ needed_items = [ "mop" ]
 consume_items = false
 max_interacts = 1
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to wash floor"
+prompt = "Press Space to wash floor"
 failed_prompt = "You need a mop to wash floor"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/WashFloor/WashFloor02"]
@@ -750,7 +750,8 @@ position = Vector2( 61, 177 )
 script = ExtResource( 18 )
 needed_items = [ "garbage" ]
 interaction_sound = ExtResource( 28 )
-prompt = "Press Enter to put garbage into bin"
+prompt = "Press Space to put trash into bucket"
+failed_prompt = "You don't have any trash"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tasks/GrabGarbage/Trash"]
 position = Vector2( -8, 17.5 )
@@ -826,8 +827,8 @@ script = ExtResource( 19 )
 id = "garbage"
 consume_items = false
 interaction_sound = ExtResource( 27 )
-prompt = "Press Enter to pick up garbage"
-failed_prompt = "You already have a garbage."
+prompt = "Press Space to pick up trash"
+failed_prompt = "You already have a trash."
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe01"]
 position = Vector2( -4, -7 )
@@ -846,8 +847,8 @@ script = ExtResource( 19 )
 id = "garbage"
 consume_items = false
 interaction_sound = ExtResource( 27 )
-prompt = "Press Enter to pick up garbage"
-failed_prompt = "You already have a garbage."
+prompt = "Press Space to pick up trash"
+failed_prompt = "You already have a trash."
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe02"]
 self_modulate = Color( 0.988235, 0.670588, 1, 1 )
@@ -867,8 +868,8 @@ script = ExtResource( 19 )
 id = "garbage"
 consume_items = false
 interaction_sound = ExtResource( 27 )
-prompt = "Press Enter to pick up garbage"
-failed_prompt = "You already have a garbage."
+prompt = "Press Space to pick up trash"
+failed_prompt = "You already have a trash."
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe03"]
 self_modulate = Color( 0.905882, 1, 0.647059, 1 )
@@ -888,8 +889,8 @@ script = ExtResource( 19 )
 id = "garbage"
 consume_items = false
 interaction_sound = ExtResource( 27 )
-prompt = "Press Enter to pick up garbage"
-failed_prompt = "You already have a garbage."
+prompt = "Press Space to pick up trash"
+failed_prompt = "You already have a trash."
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/Floor/Gargabe04"]
 self_modulate = Color( 1, 0.25098, 0.972549, 1 )
@@ -973,7 +974,7 @@ script = ExtResource( 19 )
 id = "glass_cleaner"
 consume_items = false
 interaction_sound = ExtResource( 30 )
-prompt = "Press Enter to pick up glass cleaner"
+prompt = "Press Space to pick up glass cleaner"
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/GlassCleaner"]
 texture = ExtResource( 22 )
@@ -996,7 +997,7 @@ script = ExtResource( 19 )
 id = "mop"
 consume_items = false
 interaction_sound = ExtResource( 31 )
-prompt = "Press Enter to grab mop"
+prompt = "Press Space to grab mop"
 
 [node name="SprObjectRag" type="Sprite" parent="YSort/Mop"]
 texture = ExtResource( 24 )
@@ -1251,6 +1252,7 @@ script = ExtResource( 34 )
 [connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor02" to="Tasks/WashFloor/WashFloor02" method="set" binds= [ "may_interact", false ]]
 [connection signal="interacted_no_args" from="Tasks/WashFloor/WashFloor02" to="YSort/Floor/Dirt02" method="free"]
 [connection signal="gate_opened" from="Tasks/GrabGarbage" to="Tasks" method="add_number"]
+[connection signal="gate_opened" from="Tasks/GrabGarbage" to="Tasks/GrabGarbage/Trash" method="set" binds= [ "may_interact", false ]]
 [connection signal="interacted_no_args" from="Tasks/GrabGarbage/Trash" to="Tasks/GrabGarbage" method="add_number"]
 [connection signal="picked_up" from="YSort/Floor/Gargabe01" to="StartCoutndown" method="activate"]
 [connection signal="picked_up" from="YSort/Floor/Gargabe02" to="StartCoutndown" method="activate"]
